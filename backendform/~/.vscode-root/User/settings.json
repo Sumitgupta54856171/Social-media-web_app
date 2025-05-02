@@ -1,0 +1,5 @@
+{
+    "database-client.autoSync": true,
+    "files.autoSave": "afterDelay",
+    "editor.wordWrap": "on"
+}

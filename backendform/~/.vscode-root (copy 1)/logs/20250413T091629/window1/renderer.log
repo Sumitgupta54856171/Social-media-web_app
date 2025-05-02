@@ -1,0 +1,180 @@
+2025-04-13 09:16:39.814 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.python' wants API proposal 'terminalShellType' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 09:16:39.832 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.vscode-python-envs' wants API proposal 'terminalShellType' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 09:16:39.835 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'github.copilot-chat' wants API proposal 'chatReadonlyPromptReference' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 09:16:40.574 [info] ChatSessionStore: Migrating 0 chat sessions from storage service to file system
+2025-04-13 09:16:40.959 [info] Started local extension host with pid 31228.
+2025-04-13 09:16:45.020 [info] Settings Sync: Account status changed from uninitialized to unavailable
+2025-04-13 09:16:48.865 [info] [perf] Render performance baseline is 96ms
+2025-04-13 09:16:54.951 [info] Extension host (LocalProcess pid: 31228) is unresponsive.
+2025-04-13 09:16:56.404 [info] UNRESPONSIVE extension host: starting to profile NOW
+2025-04-13 09:17:00.668 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.python' wants API proposal 'terminalShellType' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 09:17:00.670 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.vscode-python-envs' wants API proposal 'terminalShellType' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 09:17:00.672 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'github.copilot-chat' wants API proposal 'chatReadonlyPromptReference' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 09:17:01.752 [info] ChatSessionStore: Migrating 0 chat sessions from storage service to file system
+2025-04-13 09:17:02.742 [info] Started local extension host with pid 31462.
+2025-04-13 09:17:08.715 [info] Settings Sync: Account status changed from uninitialized to unavailable
+2025-04-13 09:17:11.643 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:17:11.724 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:17:11.725 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:17:11.728 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:17:11.730 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:17:11.737 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:17:11.739 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:17:11.742 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:17:15.764 [info] [perf] Render performance baseline is 105ms
+2025-04-13 09:17:23.369 [info] Extension host (LocalProcess pid: 31462) is unresponsive.
+2025-04-13 09:17:24.354 [info] UNRESPONSIVE extension host: starting to profile NOW
+2025-04-13 09:17:30.440 [warning] UNRESPONSIVE extension host: 'cweijan.vscode-postgresql-client2' took 59.62805011441172% of 2987.351ms, saved PROFILE here: 'file:///tmp/exthost-489e27.cpuprofile'
+2025-04-13 09:17:35.913 [info] Extension host (LocalProcess pid: 31462) is responsive.
+2025-04-13 09:17:44.156 [info] Extension host (LocalProcess pid: 31462) is unresponsive.
+2025-04-13 09:17:46.419 [info] UNRESPONSIVE extension host: starting to profile NOW
+2025-04-13 09:17:52.696 [warning] UNRESPONSIVE extension host: 'github.copilot' took 99.90858361742244% of 5036.064ms, saved PROFILE here: 'file:///tmp/exthost-76c550.cpuprofile'
+2025-04-13 09:17:53.253 [error] An unknown error occurred. Please consult the log for more details.
+2025-04-13 09:17:53.431 [info] Extension host (LocalProcess pid: 31462) is responsive.
+2025-04-13 09:25:23.412 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.python' wants API proposal 'terminalShellType' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 09:25:23.419 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.vscode-python-envs' wants API proposal 'terminalShellType' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 09:25:23.420 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'github.copilot-chat' wants API proposal 'chatReadonlyPromptReference' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 09:25:23.860 [info] ChatSessionStore: Migrating 0 chat sessions from storage service to file system
+2025-04-13 09:25:24.679 [info] Started local extension host with pid 6095.
+2025-04-13 09:25:28.884 [info] Settings Sync: Account status changed from uninitialized to unavailable
+2025-04-13 09:25:31.379 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:25:31.384 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:25:31.404 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:25:31.412 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:25:31.435 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:25:31.441 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:25:31.450 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:25:31.455 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 09:25:32.220 [info] [perf] Render performance baseline is 74ms
+2025-04-13 09:25:39.466 [info] Extension host (LocalProcess pid: 6095) is unresponsive.
+2025-04-13 09:25:40.244 [info] UNRESPONSIVE extension host: starting to profile NOW
+2025-04-13 09:25:57.261 [info] Extension host (LocalProcess pid: 6095) is responsive.
+2025-04-13 09:26:03.640 [error] An unknown error occurred. Please consult the log for more details.
+2025-04-13 09:26:04.274 [error] [File Watcher] Unexpected error: inotify_add_watch on '/root/backendform/~/.vscode-root/CachedProfilesData/__default__profile__' failed: No such file or directory (EUNKNOWN) (path: /root/backendform)
+2025-04-13 09:26:04.277 [error] [File Watcher (universal)] inotify_add_watch on '/root/backendform/~/.vscode-root/CachedProfilesData/__default__profile__' failed: No such file or directory
+2025-04-13 09:28:49.160 [error] No registered selector for ID: copilot-chat.fixWithCopilot
+2025-04-13 09:28:49.172 [error] No registered selector for ID: copilot-chat.generateCommitMessage
+2025-04-13 09:28:49.230 [error] No registered selector for ID: copilot-chat.terminalToDebugging
+2025-04-13 09:28:49.232 [error] No registered selector for ID: copilot-chat.terminalToDebuggingSuccess
+2025-04-13 10:16:39.916 [warning] [lifecycle] onWillShutdown is taking a long time, pending operations: join.chatEditingSession
+2025-04-13 10:16:44.174 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.python' wants API proposal 'terminalShellType' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 10:16:44.272 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.vscode-python-envs' wants API proposal 'terminalShellType' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 10:16:44.274 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'github.copilot-chat' wants API proposal 'chatReadonlyPromptReference' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 10:16:44.648 [warning] Creation of workbench contribution 'workbench.contrib.preferencesActions' took 40ms.
+2025-04-13 10:16:44.836 [warning] Creation of workbench contribution 'workbench.contrib.chatAgentSetting' took 38ms.
+2025-04-13 10:16:47.440 [info] Started local extension host with pid 502.
+2025-04-13 10:16:57.465 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:16:57.469 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:16:57.472 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:16:57.487 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:16:57.489 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:16:57.492 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:16:57.494 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:16:57.503 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:16:59.321 [info] Settings Sync: Account status changed from uninitialized to unavailable
+2025-04-13 10:17:01.120 [info] Extension host (LocalProcess pid: 502) is unresponsive.
+2025-04-13 10:17:02.283 [warning] Creation of workbench contribution 'workbench.contrib.dynamicWindowConfiguration' took 441ms.
+2025-04-13 10:17:02.312 [info] Extension host (LocalProcess pid: 502) is responsive.
+2025-04-13 10:17:03.258 [info] [perf] Render performance baseline is 144ms
+2025-04-13 10:17:09.904 [info] Extension host (LocalProcess pid: 502) is unresponsive.
+2025-04-13 10:17:12.410 [info] UNRESPONSIVE extension host: starting to profile NOW
+2025-04-13 10:17:26.585 [info] Extension host (LocalProcess pid: 502) is responsive.
+2025-04-13 10:17:29.838 [error] Error: Aborted onWillSaveTextDocument-event after 1750ms
+    at vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1279:10003
+2025-04-13 10:17:37.756 [info] Extension host (LocalProcess pid: 502) is unresponsive.
+2025-04-13 10:17:40.705 [info] UNRESPONSIVE extension host: starting to profile NOW
+2025-04-13 10:17:46.298 [warning] UNRESPONSIVE extension host: 'github.copilot' took 94.78248762591632% of 4765.327ms, saved PROFILE here: 'file:///tmp/exthost-2e01f5.cpuprofile'
+2025-04-13 10:17:46.581 [info] Extension host (LocalProcess pid: 502) is responsive.
+2025-04-13 10:17:50.609 [info] Extension host (LocalProcess pid: 502) is unresponsive.
+2025-04-13 10:17:52.616 [info] UNRESPONSIVE extension host: starting to profile NOW
+2025-04-13 10:17:52.784 [info] Extension host (LocalProcess pid: 502) is responsive.
+2025-04-13 10:17:52.786 [info] UNRESPONSIVE extension host: received responsive event and cancelling profiling session
+2025-04-13 10:17:53.626 [warning] UNRESPONSIVE extension host: 'github.copilot-chat' took 58.23812325190163% of 112.855ms, saved PROFILE here: 'file:///tmp/exthost-e6312e.cpuprofile'
+2025-04-13 10:18:31.584 [warning] [backup tracker] suspended, ignoring unregister event file:///root/form/formfill/package.json 
+2025-04-13 10:18:33.742 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.python' wants API proposal 'terminalShellType' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 10:18:33.744 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.vscode-python-envs' wants API proposal 'terminalShellType' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 10:18:33.746 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'github.copilot-chat' wants API proposal 'chatReadonlyPromptReference' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 10:18:35.179 [info] Started local extension host with pid 3583.
+2025-04-13 10:18:41.910 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:18:41.930 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:18:41.944 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:18:41.949 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:18:41.964 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:18:41.966 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:18:41.968 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:18:41.970 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:18:42.065 [info] Settings Sync: Account status changed from uninitialized to unavailable
+2025-04-13 10:18:47.585 [info] [perf] Render performance baseline is 59ms
+2025-04-13 10:18:48.051 [info] Extension host (LocalProcess pid: 3583) is unresponsive.
+2025-04-13 10:18:48.940 [info] UNRESPONSIVE extension host: starting to profile NOW
+2025-04-13 10:18:50.461 [info] Extension host (LocalProcess pid: 3583) is responsive.
+2025-04-13 10:18:50.462 [info] UNRESPONSIVE extension host: received responsive event and cancelling profiling session
+2025-04-13 10:18:57.641 [info] Extension host (LocalProcess pid: 3583) is unresponsive.
+2025-04-13 10:18:58.393 [info] UNRESPONSIVE extension host: starting to profile NOW
+2025-04-13 10:19:16.338 [info] Extension host (LocalProcess pid: 3583) is responsive.
+2025-04-13 10:19:28.027 [info] Extension host (LocalProcess pid: 3583) is unresponsive.
+2025-04-13 10:19:30.677 [info] UNRESPONSIVE extension host: starting to profile NOW
+2025-04-13 10:19:36.158 [info] Extension host (LocalProcess pid: 3583) is responsive.
+2025-04-13 10:19:36.334 [warning] UNRESPONSIVE extension host: 'github.copilot' took 83.50481530783023% of 4193.616ms, saved PROFILE here: 'file:///tmp/exthost-90e793.cpuprofile'
+2025-04-13 10:19:42.754 [info] Extension host (LocalProcess pid: 3583) is unresponsive.
+2025-04-13 10:19:44.987 [info] UNRESPONSIVE extension host: starting to profile NOW
+2025-04-13 10:19:45.122 [info] Extension host (LocalProcess pid: 3583) is responsive.
+2025-04-13 10:19:45.126 [info] UNRESPONSIVE extension host: received responsive event and cancelling profiling session
+2025-04-13 10:33:42.439 [warning] [backup tracker] suspended, ignoring dirty change event file:///root/backendform/controller/login.js 
+2025-04-13 10:33:42.538 [warning] [backup tracker] suspended, ignoring dirty change event file:///root/backendform/model/usersigma.js 
+2025-04-13 10:33:45.301 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.python' wants API proposal 'terminalShellType' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 10:33:45.303 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.vscode-python-envs' wants API proposal 'terminalShellType' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 10:33:45.305 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'github.copilot-chat' wants API proposal 'chatReadonlyPromptReference' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 10:33:47.083 [info] Started local extension host with pid 21183.
+2025-04-13 10:33:54.841 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:33:54.848 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:33:54.878 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:33:54.888 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:33:54.906 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:33:54.912 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:33:54.918 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:33:54.941 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:33:57.596 [info] Settings Sync: Account status changed from uninitialized to unavailable
+2025-04-13 10:33:59.691 [info] Extension host (LocalProcess pid: 21183) is unresponsive.
+2025-04-13 10:34:01.590 [info] [perf] Render performance baseline is 156ms
+2025-04-13 10:34:01.691 [info] Extension host (LocalProcess pid: 21183) is responsive.
+2025-04-13 10:34:09.915 [info] Extension host (LocalProcess pid: 21183) is unresponsive.
+2025-04-13 10:34:11.118 [info] UNRESPONSIVE extension host: starting to profile NOW
+2025-04-13 10:34:34.862 [info] Extension host (LocalProcess pid: 21183) is responsive.
+2025-04-13 10:34:42.630 [info] Extension host (LocalProcess pid: 21183) is unresponsive.
+2025-04-13 10:34:43.496 [info] UNRESPONSIVE extension host: starting to profile NOW
+2025-04-13 10:34:48.868 [info] Extension host (LocalProcess pid: 21183) is responsive.
+2025-04-13 10:39:11.759 [warning] [backup tracker] suspended, ignoring dirty change event file:///root/form/formfill/src/AuthPorvider.jsx 
+2025-04-13 10:39:15.303 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.python' wants API proposal 'terminalShellType' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 10:39:15.307 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.vscode-python-envs' wants API proposal 'terminalShellType' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 10:39:15.308 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'github.copilot-chat' wants API proposal 'chatReadonlyPromptReference' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-04-13 10:39:15.528 [warning] Creation of workbench contribution 'workbench.contrib.preferencesActions' took 47ms.
+2025-04-13 10:39:16.975 [info] Started local extension host with pid 24100.
+2025-04-13 10:39:21.156 [info] Settings Sync: Account status changed from uninitialized to unavailable
+2025-04-13 10:39:25.564 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:39:25.608 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:39:25.611 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:39:25.618 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:39:25.620 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:39:25.630 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:39:25.642 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:39:25.644 [error] [Extension Host] Failed to load message bundle for file /root/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.8/out/extension
+2025-04-13 10:39:29.058 [warning] Settings pattern "GitHub.copilot.manageExtension" doesn't match any settings
+2025-04-13 10:39:29.571 [info] Extension host (LocalProcess pid: 24100) is unresponsive.
+2025-04-13 10:39:30.243 [error] Error: Aborted onWillSaveTextDocument-event after 1750ms
+    at vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1279:10003
+2025-04-13 10:39:32.955 [info] Extension host (LocalProcess pid: 24100) is responsive.
+2025-04-13 10:39:33.074 [warning] Settings pattern "GitHub.copilot.manageExtension" doesn't match any settings
+2025-04-13 10:39:38.543 [warning] Settings pattern "GitHub.copilot.manageExtension" doesn't match any settings
+2025-04-13 10:39:38.878 [warning] Creation of workbench contribution 'workbench.contrib.dynamicWindowConfiguration' took 142ms.
+2025-04-13 10:39:40.137 [warning] Settings pattern "GitHub.copilot.manageExtension" doesn't match any settings
+2025-04-13 10:39:41.098 [info] Extension host (LocalProcess pid: 24100) is unresponsive.
+2025-04-13 10:39:42.069 [error] Error: Aborted onWillSaveTextDocument-event after 1750ms
+    at vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1279:10003
+2025-04-13 10:39:42.103 [info] [perf] Render performance baseline is 127ms
+2025-04-13 10:39:46.761 [warning] Settings pattern "GitHub.copilot.manageExtension" doesn't match any settings
+2025-04-13 10:39:51.349 [info] Extension host (LocalProcess pid: 24100) is responsive.
+2025-04-13 10:39:58.491 [info] Extension host (LocalProcess pid: 24100) is unresponsive.
+2025-04-13 10:40:00.807 [info] UNRESPONSIVE extension host: starting to profile NOW
+2025-04-13 10:40:06.361 [warning] UNRESPONSIVE extension host: 'github.copilot' took 100% of 5028.469ms, saved PROFILE here: 'file:///tmp/exthost-82e50c.cpuprofile'
+2025-04-13 10:40:07.663 [info] Extension host (LocalProcess pid: 24100) is responsive.

@@ -1,0 +1,2 @@
+2025-04-13 09:26:04.311 [error] [File Watcher] Unexpected error: inotify_add_watch on '/root/backendform/~/.vscode-root/CachedProfilesData/__default__profile__' failed: No such file or directory (EUNKNOWN) (path: /root/backendform)
+2025-04-13 09:26:04.312 [error] [File Watcher (universal)] inotify_add_watch on '/root/backendform/~/.vscode-root/CachedProfilesData/__default__profile__' failed: No such file or directory
