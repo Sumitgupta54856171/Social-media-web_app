@@ -13,7 +13,6 @@ function App() {
           <AuthPorvider>
           <Home></Home>
             <Routes>
-              
               <Route path='/' element={<Homepage></Homepage>} />
               <Route path='/login' element={<Inputes />} />
               <Route path='/signup' element={<Signup />} />

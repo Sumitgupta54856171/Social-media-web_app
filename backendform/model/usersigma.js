@@ -3,16 +3,63 @@ const bcrypt =require('bcryptjs');
 const userSigma = new mongoose.Schema({
 	username:{
 		type:String,
+		unique:true,
+		required:true,
 	},
 	email:{
 		type:String,
-		require:true,
+		required:true,
 		
 	},
 	password:{
 		type:String,
-		require:true
+		required:true
+	},
+	
+followers:[
+	{
+  type:mongoose.Schema.Types.ObjectId,
+  ref:'userSigma'
 	}
+ ],
+ following:[
+	{
+  type:mongoose.Schema.Types.ObjectId,
+  ref:'userSigma'
+	}
+ ],
+ status:[{
+	image:{
+		name:{
+		 type:String,
+    },
+		path:{
+			type:String,
+    }
+	},
+	see:{
+		type:Number,
+		default:0,
+	},
+	statussee:{
+		type:Boolean,
+		default: false,
+	},
+	createdAt: {
+		type: Date,
+		default: Date.now,
+	},
+	Comments: [{
+		type: String,
+	}],
+	like: {
+		type: Number,
+		default: 0,
+	},
+	title:{
+		type: String,
+	}}
+]
 })
 userSigma.pre('save',async function(next){
 	if(this.isModified('password')){

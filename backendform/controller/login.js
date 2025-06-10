@@ -1,14 +1,7 @@
 const User = require('../model/usersigma');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const nodemailer =require('nodemailer');
-let transport = nodemailer.createTransport({
-    service:'gmail',
-    auth:{
-        user:"guptaashish2531@gmail.com",
-        passord:"7$Ashish"
-    }
-})
+const {setsession} = require('../model/session');
 
 async function login(req,res){
     console.log(req.body);
@@ -30,9 +23,12 @@ async function login(req,res){
                 email:user.email
             };
            
-            const token = jwt.sign(payload,jwt_secrt,{ expiresIn:'1h'});
-            req.session.token = token;
-            req.session.user = user._id;
+            const token = jwt.sign(payload,jwt_secrt,{ expiresIn:60*60*24*7*1000});
+            res.cookie('sociluser',token,{
+                httpOnly:true,
+                maxAge:60*60*24*7*1000
+            });
+            setsession(user.username,payload);
             res.json({ token });
             console.log('Login successful');
         }catch(err){
@@ -43,36 +39,14 @@ async function register(req,res){
     const {username,email,password} = req.body;
     console.log(req.body);
     console.log('Registering user:', username, email, password);
-    try{
-        const user = await User.findOne({email});
-        function generatedotp(){
-            let otp =  1000+Math.random*9000;
-            console.log(otp);
-            return otp
-        }
-       
-       
     
-   
+        const user = await User.findOne({email});
+      
     if(user){
         console.log('User already exists');
         return res.status(400).send('User already exists');
     }
-    let mailOptions={
-        from:'guptaashish2531@gmail.com',
-        to:user.email,
-        subject:"hello from postclone",
-        text :`This is a one time password of form otp ${generateotp} `,
-    }
-    transport.sendMail(mailOptions,(error,info)=>{
-        if(error){
-            console.log('Kuch galat ho gaya:' ,error);
-        }else{
-            console.log("Email successfully bhej diya :", info.response);
-        }
-    });}catch(err){
-        console.log(err)
-    }
+
     const  newUser = new User({
         username:username,
         email:email,
@@ -95,7 +69,7 @@ function logout(){
             reject(err);
         }
     })
-    redirect('/')
+    
 }
 module.exports = {
     login,

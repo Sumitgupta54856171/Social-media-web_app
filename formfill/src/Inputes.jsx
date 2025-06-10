@@ -10,13 +10,14 @@ function Inputes(){
      login(email,password);
    }
     return <> 
-     <form onSubmit={handleSubmit} className="border-0 w-full h-screen justify-center items-center flex flex-row bg-slate-900">
-     <div className="border-0 flex flex-col rounded-md gap-4 w-full h-60 text-white">
-        <input type="email" placeholder="Email" name="email" value={email} onChange={(e)=>{ setemail(e.target.value);}}  autoComplete="email" className="p-6 text-shadow-white"/>
-    <input type="password" placeholder="pssword" name="password" value={password} onChange={(e)=>{ setpassword(e.target.value);}} autoComplete="current-password" className="p-6"/>
-    <button type="submit" className="bg-cyan-500 shadow-lg shadow-cyan-500/50 boder-0 rounded-xl py-3 ">Login</button>  
+     <form onSubmit={handleSubmit} className="space-y-2  w-screen h-full justify-center ">
+     <div className="rounded-lg  border-slate-600  ">
+        <input type="email" placeholder="Email" name="email" value={email} onChange={(e)=>{ setemail(e.target.value);}}  autoComplete="email"  className="w-full border rounded-md m-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500"/>
+    <input type="password" placeholder="pssword" name="password" value={password} onChange={(e)=>{ setpassword(e.target.value);}} autoComplete="current-password" className="w-full border rounded-md m-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500"/>
+    <button type="submit" className="bg-cyan-500 shadow-lg shadow-cyan-500/50 boder-0 rounded-xl py-3 w-screen">Login</button>
     </div>
     </form>
+    
    
     </>
 }

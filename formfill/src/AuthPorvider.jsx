@@ -1,39 +1,54 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import { Authcontext } from "./context";
 
 function AuthPorvider({children}){
-    const [user,setUser] =useState(null);
+    const [showstatu,setstatus] = useState(false);
+    const [user,setUser] =useState(false);
+    const [username,setUsername] =useState(null);
+    const [status,setStatus] = useState([]);
     const [error,serError]=useState('');
     const navigate = useNavigate();
-
-    
-
+   const  handleStatus=()=>{
+        setstatus(!showstatu);
+        console.log('status clicked');
+    }
+useEffect(()=>{
+  const checkAuth = async ()=>{
+  const response = await axios.get('http://localhost:3003/api/verify',{withCredentials: true});
+  const userdata  = response.data.user;
+ setUsername(userdata.username);
+  console.log("1")
+  console.log(username)
+  if(response.data.user.username !== null && response.data.user.username !== undefined){
+      setUser(true);
+  }
+  
+}
+checkAuth();
+    },[username]);
+  useEffect(()=>{
+  const getstatus = async ()=>{
+        const response = await axios.get('http://localhost:3003/api/getstatus',{withCredentials:true});
+        setStatus(response.data.statusdata1);
+        console.log(status)
+        }
+        getstatus();
+  },[status])  
+      
     async function login(email,password){
-       
         try {
-            const res = await axios.post('http://localhost:3000/login', {
+            const res = await axios.post('http://localhost:3003/api/login', {
                 email: email,
                 password: password
-            });
-            console.log(email);
-            setUser({email:email});
-            console.log(res.data.token);
-            const tokens = JSON.stringify(res.data.token);
-            localStorage.setItem('token', tokens);
-           
-            // Check if the token is saved
-            const savedToken = localStorage.getItem('token');
+            },{withCredentials: true});
             if (savedToken) {
-                console.log('Token saved successfully:', savedToken);
+                
             } else {
-                console.log('Failed to save token');
+               
             }
-           
-            navigate('/');
-           
-        
+            redirect('/')
         }catch(error){
             console.log(error);
             if(error.response && error.response.status === 401){
@@ -43,10 +58,7 @@ function AuthPorvider({children}){
             }
           
         }
-        
-     
     }
-
     async function register(username,email,password){
         const userData = {
             username: username,
@@ -54,18 +66,18 @@ function AuthPorvider({children}){
             password: password
         }
         console.log(userData);
-        await axios.post('http://localhost:3000/register',userData,)
+        await axios.post('http://localhost:3003/api/register',userData,{withCredentials: true})
+        console.log('success');
         navigate('/login');
     }
 
     function logout(){
         setUser(null);
-        localStorage.removeItem('token');
         navigate('/');
     }
 
     return(
-        <Authcontext.Provider value={{user,error,login,logout,register}}>
+        <Authcontext.Provider value={{user,error,login,logout,register,username,status,showstatu,handleStatus}}>
             {children}
         </Authcontext.Provider>
     )
