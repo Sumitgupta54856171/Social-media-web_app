@@ -5,10 +5,7 @@ import { Authcontext } from "../context";
 import { useContext,useState } from "react";
 function Navbar(){
     const {user} = useContext(Authcontext);
-    const [live , setLive] = useState(false)
-    function handlelive(){
-        setLive(!live);
-    }
+ 
 return(<> 
 {user?
 
@@ -23,7 +20,7 @@ return(<>
                 <Link to="/profile" className="flex flex-row gap-1 hover:text-white/70 hover:bg-white/10 hover:border hover:rounded-2xl hover:px-2"><p>Post</p> <UserIcon size={20}/></Link>
             </li>
             <li>
-                <p className="flex flex-row gap-1 hover:text-white/70 hover:bg-white/10 hover:border hover:rounded-2xl hover:px-2" onClick={handlelive}  onMouseDown={handlelive}><p>Stream</p><ProjectorIcon size={20}/></p>
+            <Link to="/profile" className="flex flex-row gap-1 hover:text-white/70 hover:bg-white/10 hover:border hover:rounded-2xl hover:px-2"><p>Add Post<img src="   https://cdn-icons-png.flaticon.com/512/3161/3161837.png " className="size-12"></img></p></Link>
             </li>
             <li>
                 <Link to="/profile" className="flex flex-row gap-1 hover:text-white/70 hover:bg-white/10 hover:border hover:rounded-2xl hover:px-2"><p>Chat</p> <UserIcon size={20}/></Link>

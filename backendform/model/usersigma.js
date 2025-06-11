@@ -59,7 +59,44 @@ followers:[
 	title:{
 		type: String,
 	}}
-]
+],
+proimage:{
+name:{
+	type:String,
+
+},
+path:{
+	type:String,
+}
+},
+post:[{
+image:{
+	name:{
+
+	},
+	path:{
+		type:String,
+	}
+},
+see:{
+	type:Number,
+	default:0,
+},
+createdAt: {
+	type: Date,
+	default: Date.now,
+},
+Comments: [{
+	type: String,
+}],
+like: {
+	type: Number,
+	default: 0,
+},
+title:{
+	type: String,
+}
+}]
 })
 userSigma.pre('save',async function(next){
 	if(this.isModified('password')){

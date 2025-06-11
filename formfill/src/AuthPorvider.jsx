@@ -32,10 +32,12 @@ checkAuth();
   const getstatus = async ()=>{
         const response = await axios.get('http://localhost:3003/api/getstatus',{withCredentials:true});
         setStatus(response.data.statusdata1);
+        console.log(response.data)
         console.log(status)
         }
-        getstatus();
-  },[status])  
+      
+getstatus()
+  },[])  
       
     async function login(email,password){
         try {
