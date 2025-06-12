@@ -12,16 +12,16 @@ const Staturing = () => {
         <>
     
         <div
-        className="flex flex-col cursor-pointer p-2 relative"
+        className="flex items-center space-x-4 cursor-pointer p-2 relative rounded-lg hover:bg-gray-200 transition-colors"
         onClick={handleStatus}>
-        <div className=" w-16 h-16 rounded-full items-center justify-center border-2 border-green-500 p-0.5 ">
+          <div className="flex-shrink-0">
             <img
-                src={`http://localhost:3001/uploads/${username.username}`}
-                alt={username.username}
-                className="w-full h-full rounded-full object-cover"
+               src={`https://placehold.co/64x64/FF5A5F/ffffff?text=${username.charAt(0).toUpperCase()}`}
+              alt={`${username}'s profile`}
+              className="w-16 h-16 rounded-full object-cover border-2 border-pink-500 shadow-md"
             />
-        </div>
-        <span className="mt-2 text-sm text-gray-700 font-medium">{username}</span>
+          </div>
+        <span className="text-sm text-gray-800 font-medium">{username}</span>
     </div>
   
  {showstatu && <Showpost></Showpost>}

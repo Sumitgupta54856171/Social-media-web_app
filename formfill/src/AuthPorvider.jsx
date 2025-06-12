@@ -19,6 +19,8 @@ useEffect(()=>{
   const response = await axios.get('http://localhost:3003/api/verify',{withCredentials: true});
   const userdata  = response.data.user;
  setUsername(userdata.username);
+ console.log("profile image")
+ console.log(username)
   console.log("1")
   console.log(username)
   if(response.data.user.username !== null && response.data.user.username !== undefined){

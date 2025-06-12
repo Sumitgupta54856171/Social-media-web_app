@@ -4,30 +4,33 @@ import { useContext } from "react";
 import Staturing from "./component/Staturing";
 
 import Addstatus from "./component/Addstatus";
+import Post from "./component/Post";
 function Homepage(){
     const {user,username} =useContext(Authcontext);
     console.log(username);
     
     return(<>
    
-  <div className="bg-slate-900 w-full h-screen">
+  <div className="bg-gray-100 w-full min-h-screen">
  
-  {user?null:  <nav className="bg-slate-600 w-20 h- 10 border border-b-gray-950 p-6">
-            <ul>
-                <li className="hover:bg-green-500 hover:border-red-300 hover:rounded-b-sm w-10 h-full">
-                    <Link to="/login">login</Link>
+  {user?null:  <nav className="bg-slate-800 text-white p-4">
+            <ul className="flex justify-end space-x-4">
+                <li>
+                    <Link to="/login" className="hover:text-blue-300">Login</Link>
                 </li>
-                <li className="hover:bg-red-500 hover:border-1 hover:border-red-300 hover:rounded-b-sm w-12 h-full">
-                    <Link to="/signup">signup</Link>
+                <li>
+                    <Link to="/signup" className="hover:text-blue-300">Signup</Link>
                 </li>
             </ul></nav>}
-            <div className="flex flex-row">
+            <div className="container mx-auto p-4"> <div className="flex flex-col md:flex-row gap-8">
+           <div className="w-full md:w-1/4">
            {user && <Addstatus></Addstatus>}
            {user && <Staturing ></Staturing>}
-          
-    </div>
-    <h1>welcome home</h1>
-   
+           </div>
+           <div className="w-full md:w-3/4"> {user && <Post></Post>}
+           </div></div></div>
+         
+  
     </div>
     </>)
 }

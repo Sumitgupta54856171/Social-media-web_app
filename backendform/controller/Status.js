@@ -49,7 +49,23 @@ const username = statusdata.map((status)=>status.username)
         res.status(200).json({message:'status fetched successfully',statusdata1});
    console.log('statusdata',statusdata);
 }
+const Profile =async(req,res)=>{
+    const token = req.cookies.sociluser;
+    console.log("hello welcome profile of the user ")
+    console.log("profile",token);
+    if(!token){
+        return res.status(401).json({error:'No token provided'})
+    }
+    jwtsecret = 'ashishgupta2531';
+    const data = jwt.verify(token,jwtsecret);
+    console.log('decoded data',data);
+    const profiledata = await Userstatus.find({username:data.username})
+    console.log('profiledata',profiledata);
+    return res.status(200).json({message:'profile fetched successfully',profiledata});
+}
+
 module.exports = {
     addstatus,
-    getStatus
+    getStatus,
+    Profile
 }

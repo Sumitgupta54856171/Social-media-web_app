@@ -7,15 +7,22 @@ import AuthPorvider from './AuthPorvider';
 import './index.css';
 import {  Routes, Route} from 'react-router-dom';
 import Homepage from './Homepage';
+import AddPost from './component/AddPost';
+import Post from './component/Post';
+import Profile from './component/Profile';
 function App() {
   return (
     <>
+    <div className='bg-white'>
           <AuthPorvider>
           <Home></Home>
             <Routes>
               <Route path='/' element={<Homepage></Homepage>} />
               <Route path='/login' element={<Inputes />} />
+              <Route path='/post' element={<Post />} />
               <Route path='/signup' element={<Signup />} />
+              <Route path='/addpost' element={<AddPost />} />
+              <Route path='/profile' element={<Profile />} />
               <Route
                 path='/dashboard'
                 element={
@@ -29,6 +36,7 @@ function App() {
          
      
         
+    </div>         
     </>
   );
 }
