@@ -5,6 +5,8 @@ import { Authcontext } from "./context";
 
 function AuthPorvider({children}){
     const [showstatu,setstatus] = useState(false);
+    const [searhtu,setseachtu] = useState(false);
+    const [searchdata,setsearchdata] = useState([]);
     const [user,setUser] =useState(false);
     const [username,setUsername] =useState(null);
     const [status,setStatus] = useState([]);
@@ -19,11 +21,8 @@ useEffect(()=>{
   const response = await axios.get('http://localhost:3003/api/verify',{withCredentials: true});
   const userdata  = response.data.user;
  setUsername(userdata.username);
- console.log("profile image")
- console.log(username)
-  console.log("1")
-  console.log(username)
-  if(response.data.user.username !== null && response.data.user.username !== undefined){
+console.log(userdata)
+  if(userdata.username){
       setUser(true);
   }
   
@@ -37,10 +36,27 @@ checkAuth();
         console.log(response.data)
         console.log(status)
         }
-      
 getstatus()
   },[])  
-      
+    
+ 
+ async function search(searchQuery){
+    console.log('search start ')
+    console.log(searchQuery)
+    const response = await axios.post('http://localhost:3003/api/search', {
+        username: searchQuery
+    },{withCredentials:true});
+    console.log('the end search',response)
+    console.log('search data')
+    console.log(response.data.searchdata)
+    console.log(response.data)
+    setsearchdata(response.data.searchdata)
+    if(response.data.searchdata){
+        setseachtu(true);
+    }
+    console.log(searhtu);
+    return response.data.searchdata;
+    }
     async function login(email,password){
         try {
             const res = await axios.post('http://localhost:3003/api/login', {
@@ -81,7 +97,7 @@ getstatus()
     }
 
     return(
-        <Authcontext.Provider value={{user,error,login,logout,register,username,status,showstatu,handleStatus}}>
+        <Authcontext.Provider value={{user,error,login,logout,register,username,status,showstatu,handleStatus,searchdata,search}}>
             {children}
         </Authcontext.Provider>
     )

@@ -5,6 +5,7 @@ const redis = require('./config/redis')
 const client = require('./config/db');
 const conroller = require('./controller/login');
 const cors = require('cors');
+const {search,savefollower} = require('./controller/search')
 const path = require('path');
 const save = require('./controller/Save');
 const uploads = require('./controller/Uploads');
@@ -40,6 +41,8 @@ app.post('/api/addstatus',uploads.single('image'),Status.addstatus);
 app.post('/api/poststatus',uploads.single('image'),save.poststatus);
 app.get('/api/getpost',save.postStatus);
 app.get('/api/getprofile',Status.Profile)
+app.post('/api/search',search);
+app.post('/api/following',savefollower);
 const port =3003;
 app.listen(port,()=>{
 	console.log(`server is running ${port}`);

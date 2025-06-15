@@ -10,18 +10,17 @@ function Homepage(){
     console.log(username);
     
     return(<>
-   
   <div className="bg-gray-100 w-full min-h-screen">
- 
-  {user?null:  <nav className="bg-slate-800 text-white p-4">
-            <ul className="flex justify-end space-x-4">
+    <nav className="bg-slate-800 text-white p-4">
+        {user ? <p></p>: <ul className="flex justify-end space-x-4">
                 <li>
                     <Link to="/login" className="hover:text-blue-300">Login</Link>
                 </li>
                 <li>
                     <Link to="/signup" className="hover:text-blue-300">Signup</Link>
                 </li>
-            </ul></nav>}
+            </ul>}
+           </nav>
             <div className="container mx-auto p-4"> <div className="flex flex-col md:flex-row gap-8">
            <div className="w-full md:w-1/4">
            {user && <Addstatus></Addstatus>}

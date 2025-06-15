@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Heart, MessageCircle, Send, Bookmark, MoreHorizontal, Smile } from 'lucide-react';
 import axios from 'axios';
 import { Authcontext } from "../context";
-
 const Post = () => {
   const [posts, setPosts] = useState([]);
   const { username } = useContext(Authcontext); 
@@ -37,6 +36,7 @@ const Post = () => {
   };
 
   return (
+    
     <div className="bg-gray-100 min-h-screen text-gray-800 flex justify-center py-4 sm:py-8">
       <div className="w-full max-w-lg md:max-w-2xl space-y-6 md:space-y-8">
         {posts.length > 0 ? (
@@ -69,6 +69,8 @@ const PostCard = ({ post, onLike, onComment }) => {
   };
 
   return (
+    <>
+
     <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
       <div className="flex items-center p-4">
         <img src={post.user.avatar} alt={post.user.name} className="w-10 h-10 rounded-full object-cover" />
@@ -125,6 +127,7 @@ const PostCard = ({ post, onLike, onComment }) => {
         </button>
       </form>
     </div>
+    </>
   );
 };
 

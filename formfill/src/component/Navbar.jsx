@@ -17,16 +17,16 @@ return(<>
                <Link to="/" className="flex flex-row items-center gap-1.5 text-white hover:text-white/80 hover:bg-white/10 rounded-full px-3 py-1.5 transition-all" ><span className="hidden sm:inline">Home</span><HomeIcon size={22}/></Link>
             </li>
             <li>
-                <Link to="/post" className="flex flex-row items-center gap-1.5 text-white hover:text-white/80 hover:bg-white/10 rounded-full px-3 py-1.5 transition-all"><span className="hidden sm:inline">Post</span> <UserIcon size={22}/></Link>
+                <Link to="/search" className="flex flex-row items-center gap-1.5 text-white hover:text-white/80 hover:bg-white/10 rounded-full px-3 py-1.5 transition-all"><span>Search</span> <img src="https://cdn-icons-png.flaticon.com/128/54/54481.png" className="w-6 h-6"></img></Link>
             </li>
             <li>
             <Link to="/addpost" className="flex flex-row items-center gap-1.5 text-white hover:text-white/80 bg-pink-600 hover:bg-pink-700 rounded-full p-2.5 transition-all shadow-md"><img src="https://cdn-icons-png.flaticon.com/512/3161/3161837.png" className="w-6 h-6"></img></Link>
             </li>
             <li>
-                <Link to="/profile" className="flex flex-row items-center gap-1.5 text-white hover:text-white/80 hover:bg-white/10 rounded-full px-3 py-1.5 transition-all"><span className="hidden sm:inline">Chat</span> <ProjectorIcon size={22}/></Link>
+                <Link to="/stream" className="flex flex-row items-center gap-1.5 text-white hover:text-white/80 hover:bg-white/10 rounded-full px-3 py-1.5 transition-all"><span className="hidden sm:inline">Stream</span> <ProjectorIcon size={22}/></Link>
             </li>
             <li>
-                <Link to="/gallery" className="flex flex-row items-center gap-1.5 text-white hover:text-white/80 hover:bg-white/10 rounded-full px-3 py-1.5 transition-all"><span className="hidden sm:inline">Gallery</span><GalleryThumbnails size={22}/></Link>
+                <Link to="/chat" className="flex flex-row items-center gap-1.5 text-white hover:text-white/80 hover:bg-white/10 rounded-full px-3 py-1.5 transition-all"><span className="hidden sm:inline">chat</span><GalleryThumbnails size={22}/></Link>
             </li>
             <li>
                 <Link to="/profile" className="flex flex-row items-center gap-1.5 text-white hover:text-white/80 hover:bg-white/10 rounded-full px-3 py-1.5 transition-all"><span className="hidden sm:inline">Profile</span><User size={22}/></Link>

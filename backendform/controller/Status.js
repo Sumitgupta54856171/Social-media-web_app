@@ -63,9 +63,31 @@ const Profile =async(req,res)=>{
     console.log('profiledata',profiledata);
     return res.status(200).json({message:'profile fetched successfully',profiledata});
 }
-
+const Search =async(req,res)=>{
+    const {username} = req.body;
+    const token = req.cookies.sociluser;
+    console.log("hello welcome search of the user ")
+    console.log("profile",token);
+    if(!token){
+        return res.status(401).json({error:'No token provided'})
+    }
+    jwtsecret = 'ashishgupta2531';
+    const data = jwt.verify(token,jwtsecret);
+    console.log('decoded data',data);
+    const searchdata = await Userstatus.find({})
+    console.log('profiledata',searchdata);
+    
+    for(let i = 0; i < searchdata.length; i++){
+        if(searchdata[i].username === username){
+            const searchdata1 = searchdata[i]
+            return res.status(200).json({message:'profile fetched successfully',searchdata1});
+        }
+    }
+    return res.status(401).json({error:'No profile found'})
+}
 module.exports = {
     addstatus,
     getStatus,
-    Profile
+    Profile,
+    Search
 }

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Authcontext } from "../context";
 import Showpost from "./showpost";
 const Staturing = () => {
-    const {username,status,showstatu,handleStatus} = useContext(Authcontext);
+    const {username,showstatu,handleStatus} = useContext(Authcontext);
     
     
     

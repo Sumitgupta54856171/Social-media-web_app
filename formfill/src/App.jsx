@@ -2,7 +2,7 @@ import Inputes from './Inputes';
 import Signup from './Signup'; // Fixed typo in 'Singup'
 import Home from './Home';
 import Authentication from './Authentication';
-import Dashboard from './Dashboard'; // Fixed typo in 'dashboard'
+import Postpage from './Postpage';
 import AuthPorvider from './AuthPorvider';
 import './index.css';
 import {  Routes, Route} from 'react-router-dom';
@@ -19,23 +19,12 @@ function App() {
             <Routes>
               <Route path='/' element={<Homepage></Homepage>} />
               <Route path='/login' element={<Inputes />} />
-              <Route path='/post' element={<Post />} />
+              <Route path='/search' element={<Postpage />} />
               <Route path='/signup' element={<Signup />} />
               <Route path='/addpost' element={<AddPost />} />
               <Route path='/profile' element={<Profile />} />
-              <Route
-                path='/dashboard'
-                element={
-                  <Authentication>
-                    <Dashboard />
-                  </Authentication>
-                }
-              />
             </Routes>
           </AuthPorvider>
-         
-     
-        
     </div>         
     </>
   );

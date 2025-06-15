@@ -96,6 +96,7 @@ like: {
 title:{
 	type: String,
 }
+
 }]
 })
 userSigma.pre('save',async function(next){
