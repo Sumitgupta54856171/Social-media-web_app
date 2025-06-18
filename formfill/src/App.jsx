@@ -1,21 +1,27 @@
 import Inputes from './Inputes';
-import Signup from './Signup'; // Fixed typo in 'Singup'
-import Home from './Home';
-import Authentication from './Authentication';
+import Signup from './Signup'; 
 import Postpage from './Postpage';
 import AuthPorvider from './AuthPorvider';
 import './index.css';
 import {  Routes, Route} from 'react-router-dom';
 import Homepage from './Homepage';
 import AddPost from './component/AddPost';
-import Post from './component/Post';
 import Profile from './component/Profile';
+import Chatlist from './component/Chatlist';
+import Navbar from './component/Navbar';
+import Shownav from './component/Shownav';
+import { useContext } from 'react';
+import WhatsAppClone from './component/WhatsAppClone';
+import {Authcontext}  from './context';
+
 function App() {
+
   return (
     <>
     <div className='bg-white'>
           <AuthPorvider>
-          <Home></Home>
+          <Shownav/>
+          
             <Routes>
               <Route path='/' element={<Homepage></Homepage>} />
               <Route path='/login' element={<Inputes />} />
@@ -23,6 +29,8 @@ function App() {
               <Route path='/signup' element={<Signup />} />
               <Route path='/addpost' element={<AddPost />} />
               <Route path='/profile' element={<Profile />} />
+              <Route path='/chat' element={<Chatlist />} />
+              <Route path='/whatsapp' element={<WhatsAppClone />} />
             </Routes>
           </AuthPorvider>
     </div>         

@@ -5,7 +5,7 @@ const redis = require('./config/redis')
 const client = require('./config/db');
 const conroller = require('./controller/login');
 const cors = require('cors');
-const {search,savefollower} = require('./controller/search')
+const {search,savefollower,finduser} = require('./controller/search')
 const path = require('path');
 const save = require('./controller/Save');
 const uploads = require('./controller/Uploads');
@@ -14,6 +14,19 @@ const cookie = require('cookie-parser');
 const dbs = require('./config/postgresql');
 const jwtverify =require('./controller/jwt');
 const Status = require('./controller/Status')
+const { setchat } = require('./controller/chat');
+const socket = require('socket.io');
+const http = require('http');
+const server = http.createServer(app);
+const Chat = require('./model/chat')
+const Message = require('./model/message')
+const io = socket(server, {
+    cors: {
+      origin: "http://localhost:5173", 
+      methods: ["GET", "POST"], 
+    },
+  });
+
 app.use(cookie());
 app.use(session({
 	secret: 'your_secret_key',
@@ -21,7 +34,7 @@ app.use(session({
 	saveUninitialized: true,
 	cookie: {
 		httpOnly: true,
-		secure: false, // Set to true if using HTTPS
+		secure: false, 
 		maxAge: 60*60*24*1000*7
 	}
 }));
@@ -33,6 +46,166 @@ app.use(cors({
     methods:["POST","GET","DEL","PUT"]
 }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.get('/api/chats/:userId', async (req, res) => {
+	try {
+	  const chats = await Chat.find({
+		participants: req.params.userId
+	  })
+	  .populate('participants', 'username avatar isOnline lastSeen')
+	  .populate('lastMessage.sender', 'username')
+	  .sort({ 'lastMessage.timestamp': -1 });
+	  
+	  res.json(chats);
+	} catch (error) {
+	  res.status(500).json({ error: error.message });
+	}
+  });
+  app.post('/api/chats', async (req, res) => {
+	try {
+	  const { participants } = req.body;
+	  
+	  // Check if chat already exists
+	  let chat = await Chat.findOne({
+		participants: { $all: participants, $size: participants.length }
+	  }).populate('participants', 'username avatar isOnline lastSeen');
+	  
+	  if (!chat) {
+		chat = new Chat({ participants });
+		await chat.save();
+		chat = await Chat.findById(chat._id)
+		  .populate('participants', 'username avatar isOnline lastSeen');
+	  }
+	  
+	  res.json(chat);
+	} catch (error) {
+	  res.status(400).json({ error: error.message });
+	}
+  });
+  app.get('/api/messages/:chatId', async (req, res) => {
+	try {
+	  const messages = await Message.find({ chatId: req.params.chatId })
+		.populate('sender', 'username avatar')
+		.sort({ timestamp: 1 });
+	  res.json(messages);
+	} catch (error) {
+	  res.status(500).json({ error: error.message });
+	}
+  });
+  const connectedUsers = new Map();
+  
+  io.on('connection', (socket) => {
+    console.log('User connected:', socket.id);
+  
+    // User joins
+    socket.on('user_join', async (userId) => {
+      connectedUsers.set(userId, socket.id);
+      socket.userId = userId;
+      
+      // Update user online status
+      await User.findByIdAndUpdate(userId, { 
+        isOnline: true,
+        lastSeen: new Date()
+      });
+      
+      // Join user to their chat rooms
+      const chats = await Chat.find({ participants: userId });
+      chats.forEach(chat => {
+        socket.join(chat._id.toString());
+      });
+      
+      // Broadcast user online status
+      socket.broadcast.emit('user_online', userId);
+    });
+  
+    // Join chat room
+    socket.on('join_chat', (chatId) => {
+      socket.join(chatId);
+      console.log(`User ${socket.userId} joined chat ${chatId}`);
+    });
+  
+    // Handle new message
+    socket.on('send_message', async (messageData) => {
+      try {
+        const { chatId, senderId, content, messageType = 'text' } = messageData;
+        
+        // Save message to database
+        const message = new Message({
+          chatId,
+          sender: senderId,
+          content,
+          messageType,
+          timestamp: new Date()
+        });
+        
+        await message.save();
+        
+        // Update chat's last message
+        await Chat.findByIdAndUpdate(chatId, {
+          lastMessage: {
+            content,
+            sender: senderId,
+            timestamp: new Date()
+          }
+        });
+        
+        // Populate message with sender info
+        const populatedMessage = await Message.findById(message._id)
+          .populate('sender', 'username avatar');
+        
+        // Send message to chat room
+        io.to(chatId).emit('receive_message', populatedMessage);
+        
+        // Send chat list update to participants
+        const updatedChat = await Chat.findById(chatId)
+          .populate('participants', 'username avatar isOnline lastSeen')
+          .populate('lastMessage.sender', 'username');
+        
+        updatedChat.participants.forEach(participant => {
+          const socketId = connectedUsers.get(participant._id.toString());
+          if (socketId) {
+            io.to(socketId).emit('chat_updated', updatedChat);
+          }
+        });
+        
+      } catch (error) {
+        console.error('Error sending message:', error);
+        socket.emit('message_error', { error: error.message });
+      }
+    });
+  
+    // Handle typing indicators
+    socket.on('typing_start', (data) => {
+      socket.to(data.chatId).emit('user_typing', {
+        userId: data.userId,
+        username: data.username
+      });
+    });
+  
+    socket.on('typing_stop', (data) => {
+      socket.to(data.chatId).emit('user_stop_typing', {
+        userId: data.userId
+      });
+    });
+  
+    // Handle disconnect
+    socket.on('disconnect', async () => {
+      if (socket.userId) {
+        connectedUsers.delete(socket.userId);
+        
+        // Update user offline status
+        await User.findByIdAndUpdate(socket.userId, {
+          isOnline: false,
+          lastSeen: new Date()
+        });
+        
+        // Broadcast user offline status
+        socket.broadcast.emit('user_offline', socket.userId);
+      }
+      
+      console.log('User disconnected:', socket.id);
+    });
+  });
+  
 app.get('/api/getstatus',Status.getStatus);
 app.get('/api/verify',jwtverify.verifyToken)
 app.post('/api/login',conroller.login);
@@ -43,8 +216,12 @@ app.get('/api/getpost',save.postStatus);
 app.get('/api/getprofile',Status.Profile)
 app.post('/api/search',search);
 app.post('/api/following',savefollower);
+app.get('/api/getuser',finduser);
+
+
+
 const port =3003;
-app.listen(port,()=>{
+server.listen(port,()=>{
 	console.log(`server is running ${port}`);
 	client;
 		redis;

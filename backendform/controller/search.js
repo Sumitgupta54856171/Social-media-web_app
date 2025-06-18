@@ -12,27 +12,35 @@ const search = async (req, res) => {
         res.status(500).json({ message: "Error searching for user" });
     }
 };
+const finduser = async(req,res)=>{
+    const token = req.cookies.sociluser;
 
+    if (!token) {
+        return res.status(401).json({ error: 'No token provided' });
+    }
+    const jwtsecret = 'ashishgupta2531';
+    const decodedToken = jwt.verify(token, jwtsecret);
+    const currentUserId = decodedToken.id; 
+    const userlist = await User.findById(currentUserId);
+     const userlist1 = userlist.following;
+     const userlist2 = await User.find({ _id: { $in: userlist1 } });
+     res.json({ userlist2 });
+}
 const savefollower = async (req, res) => {
     try {
-        const { id } = req.body; 
+    const { id } = req.body; 
         console.log(req.body)
-        console.log("user foollowing")// id of the user to follow
+        console.log("user foollowing")
         const token = req.cookies.sociluser;
 
         if (!token) {
             return res.status(401).json({ error: 'No token provided' });
         }
-
         const jwtsecret = 'ashishgupta2531';
-        // Assuming the JWT payload contains the user's ID as `id`
         const decodedToken = jwt.verify(token, jwtsecret);
-        const currentUserId = decodedToken.id; // id of the current user
+        const currentUserId = decodedToken.id; 
 
-        // Add the user being followed to the current user's 'following' list
         await User.findByIdAndUpdate(currentUserId, { $addToSet: { following: id } });
-
-        // Add the current user to the 'followers' list of the user being followed
         await User.findByIdAndUpdate(id, { $addToSet: { followers: currentUserId } });
 
         res.json({ message: "User successfully followed" });
@@ -42,4 +50,4 @@ const savefollower = async (req, res) => {
     }
 };
 
-module.exports = { search, savefollower };
+module.exports = { search, savefollower,finduser };

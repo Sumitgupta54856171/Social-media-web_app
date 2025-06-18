@@ -12,14 +12,20 @@ function AuthPorvider({children}){
     const [status,setStatus] = useState([]);
     const [error,serError]=useState('');
     const navigate = useNavigate();
+    const [current,setCurrent] = useState(null);
    const  handleStatus=()=>{
         setstatus(!showstatu);
         console.log('status clicked');
     }
+     const [shownav,setShownav] = useState(false);
+  function handleclick(){
+    setShownav(!shownav);
+  }
 useEffect(()=>{
   const checkAuth = async ()=>{
   const response = await axios.get('http://localhost:3003/api/verify',{withCredentials: true});
   const userdata  = response.data.user;
+  setCurrent(userdata._id);
  setUsername(userdata.username);
 console.log(userdata)
   if(userdata.username){
@@ -28,7 +34,7 @@ console.log(userdata)
   
 }
 checkAuth();
-    },[username]);
+    },[]);
   useEffect(()=>{
   const getstatus = async ()=>{
         const response = await axios.get('http://localhost:3003/api/getstatus',{withCredentials:true});
@@ -97,7 +103,7 @@ getstatus()
     }
 
     return(
-        <Authcontext.Provider value={{user,error,login,logout,register,username,status,showstatu,handleStatus,searchdata,search}}>
+        <Authcontext.Provider value={{user,error,login,logout,register,username,status,showstatu,handleStatus,searchdata,search,handleclick,shownav,current}}>
             {children}
         </Authcontext.Provider>
     )

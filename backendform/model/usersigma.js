@@ -97,7 +97,7 @@ title:{
 	type: String,
 }
 
-}]
+}],
 })
 userSigma.pre('save',async function(next){
 	if(this.isModified('password')){

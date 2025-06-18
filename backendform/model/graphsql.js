@@ -1,7 +1,10 @@
 const {ApolloServer, gql} = require('apollo-server-express');
 const typeDefs = gql`
-type Query {
-    hello: String
+type Userpost {
+    post:String,
+    like:number,
+    comment:array,
+    
 }
 `;
 const resolvers = {
