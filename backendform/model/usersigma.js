@@ -98,6 +98,14 @@ title:{
 }
 
 }],
+isOnline:{
+	type:Boolean,
+	default:false
+},
+lastSeen:{
+	type:Date,
+	default:Date.now
+}
 })
 userSigma.pre('save',async function(next){
 	if(this.isModified('password')){
@@ -110,4 +118,4 @@ userSigma.methods.matchPassword = async function(enteredPassword){
 	return await bcrypt.compare(enteredPassword,this.password);
 }
 
-module.exports = mongoose.model('userSigma',userSigma);
+module.exports = mongoose.model('usersigmas',userSigma);

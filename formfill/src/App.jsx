@@ -13,7 +13,7 @@ import Shownav from './component/Shownav';
 import { useContext } from 'react';
 import WhatsAppClone from './component/WhatsAppClone';
 import {Authcontext}  from './context';
-
+import Chatbot from './component/Chatbot';
 function App() {
 
   return (
@@ -31,6 +31,7 @@ function App() {
               <Route path='/profile' element={<Profile />} />
               <Route path='/chat' element={<Chatlist />} />
               <Route path='/whatsapp' element={<WhatsAppClone />} />
+              <Route path='/chatbot' element={<Chatbot />} />
             </Routes>
           </AuthPorvider>
     </div>         

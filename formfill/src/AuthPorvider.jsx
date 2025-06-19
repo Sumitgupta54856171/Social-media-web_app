@@ -12,10 +12,9 @@ function AuthPorvider({children}){
     const [status,setStatus] = useState([]);
     const [error,serError]=useState('');
     const navigate = useNavigate();
-    const [current,setCurrent] = useState(null);
+    const [current,setCurrent] = useState();
    const  handleStatus=()=>{
         setstatus(!showstatu);
-        console.log('status clicked');
     }
      const [shownav,setShownav] = useState(false);
   function handleclick(){
@@ -25,9 +24,8 @@ useEffect(()=>{
   const checkAuth = async ()=>{
   const response = await axios.get('http://localhost:3003/api/verify',{withCredentials: true});
   const userdata  = response.data.user;
-  setCurrent(userdata._id);
+  setCurrent(userdata);
  setUsername(userdata.username);
-console.log(userdata)
   if(userdata.username){
       setUser(true);
   }
@@ -39,8 +37,7 @@ checkAuth();
   const getstatus = async ()=>{
         const response = await axios.get('http://localhost:3003/api/getstatus',{withCredentials:true});
         setStatus(response.data.statusdata1);
-        console.log(response.data)
-        console.log(status)
+       
         }
 getstatus()
   },[])  
@@ -52,10 +49,6 @@ getstatus()
     const response = await axios.post('http://localhost:3003/api/search', {
         username: searchQuery
     },{withCredentials:true});
-    console.log('the end search',response)
-    console.log('search data')
-    console.log(response.data.searchdata)
-    console.log(response.data)
     setsearchdata(response.data.searchdata)
     if(response.data.searchdata){
         setseachtu(true);
@@ -91,9 +84,7 @@ getstatus()
             email: email,
             password: password
         }
-        console.log(userData);
         await axios.post('http://localhost:3003/api/register',userData,{withCredentials: true})
-        console.log('success');
         navigate('/login');
     }
 

@@ -18,15 +18,22 @@ const { setchat } = require('./controller/chat');
 const socket = require('socket.io');
 const http = require('http');
 const server = http.createServer(app);
+const User = require('./model/usersigma')
 const Chat = require('./model/chat')
 const Message = require('./model/message')
+const {Kafka} = require('kafkajs');
+
 const io = socket(server, {
     cors: {
       origin: "http://localhost:5173", 
       methods: ["GET", "POST"], 
     },
   });
-
+const kafka = new Kafka({
+    clientId: 'my-app',
+    brokers: [  'localhost:9092'],
+})
+const producer = kafka.producer();
 app.use(cookie());
 app.use(session({
 	secret: 'your_secret_key',
@@ -51,9 +58,7 @@ app.get('/api/chats/:userId', async (req, res) => {
 	  const chats = await Chat.find({
 		participants: req.params.userId
 	  })
-	  .populate('participants', 'username avatar isOnline lastSeen')
-	  .populate('lastMessage.sender', 'username')
-	  .sort({ 'lastMessage.timestamp': -1 });
+	  console.log(chats)
 	  
 	  res.json(chats);
 	} catch (error) {
@@ -61,7 +66,8 @@ app.get('/api/chats/:userId', async (req, res) => {
 	}
   });
   app.post('/api/chats', async (req, res) => {
-	try {
+    console.log(req.body)
+
 	  const { participants } = req.body;
 	  
 	  // Check if chat already exists
@@ -75,17 +81,24 @@ app.get('/api/chats/:userId', async (req, res) => {
 		chat = await Chat.findById(chat._id)
 		  .populate('participants', 'username avatar isOnline lastSeen');
 	  }
-	  
-	  res.json(chat);
-	} catch (error) {
-	  res.status(400).json({ error: error.message });
-	}
+	
+	  res.json({chat},{message:"chat created"});
   });
+  app.get('/api/messages',async(req,res)=>{
+	try {
+		const messages = await Message.find()
+		res.json(messages)
+	} catch (error) {
+		res.status(500).json({error:error.message})
+	}
+  })
   app.get('/api/messages/:chatId', async (req, res) => {
+    console.log(req.params.chatId)
 	try {
 	  const messages = await Message.find({ chatId: req.params.chatId })
 		.populate('sender', 'username avatar')
 		.sort({ timestamp: 1 });
+    console.log("message",messages)
 	  res.json(messages);
 	} catch (error) {
 	  res.status(500).json({ error: error.message });
@@ -102,10 +115,10 @@ app.get('/api/chats/:userId', async (req, res) => {
       socket.userId = userId;
       
       // Update user online status
-      await User.findByIdAndUpdate(userId, { 
+      await User.findByIdAndUpdate(userId,{ $set:{ 
         isOnline: true,
         lastSeen: new Date()
-      });
+      }},{new:true,runValidators:true});
       
       // Join user to their chat rooms
       const chats = await Chat.find({ participants: userId });
@@ -150,12 +163,12 @@ app.get('/api/chats/:userId', async (req, res) => {
         
         // Populate message with sender info
         const populatedMessage = await Message.findById(message._id)
-          .populate('sender', 'username avatar');
+        console.log('send message data')
+         console.log(populatedMessage)
         
         // Send message to chat room
-        io.to(chatId).emit('receive_message', populatedMessage);
+        io.emit('receive_message', populatedMessage);
         
-        // Send chat list update to participants
         const updatedChat = await Chat.findById(chatId)
           .populate('participants', 'username avatar isOnline lastSeen')
           .populate('lastMessage.sender', 'username');
@@ -193,10 +206,10 @@ app.get('/api/chats/:userId', async (req, res) => {
         connectedUsers.delete(socket.userId);
         
         // Update user offline status
-        await User.findByIdAndUpdate(socket.userId, {
+        await User.findByIdAndUpdate(socket.userId,{ $set:{ 
           isOnline: false,
           lastSeen: new Date()
-        });
+        }},{new:true,runValidators:true});
         
         // Broadcast user offline status
         socket.broadcast.emit('user_offline', socket.userId);

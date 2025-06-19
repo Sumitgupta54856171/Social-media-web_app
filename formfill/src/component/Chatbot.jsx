@@ -9,7 +9,7 @@ function Chatbot(){
         username:username, 
         avatar: '👤' 
     });
-    const [users, setUsers] = useState();
+    const [users, setUsers] = useState([]);
     useEffect(()=>{
         const Userlist = async()=>{
             const res = await axios.get('http://localhost:3003/api/getuser',{withCredentials:true})
@@ -21,7 +21,7 @@ function Chatbot(){
     },[])
     return(
         <div>
-            {users && users.map(user=>(
+            {users.map(user=>(
                 <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
@@ -30,7 +30,7 @@ function Chatbot(){
         <ListItemText
           primary={user.username}
           secondary={
-            <React.Fragment>
+        
               <Typography
                 component="span"
                 variant="body2"
@@ -38,8 +38,8 @@ function Chatbot(){
               >
                 {user.username}
               </Typography>
-              {" — I'll be in your neighborhood doing errands this…"}
-            </React.Fragment>
+            
+            
           }
         />
       </ListItem>
