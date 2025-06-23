@@ -70,7 +70,6 @@ app.get('/api/chats/:userId', async (req, res) => {
 
 	  const { participants } = req.body;
 	  
-	  // Check if chat already exists
 	  let chat = await Chat.findOne({
 		participants: { $all: participants, $size: participants.length }
 	  }).populate('participants', 'username avatar isOnline lastSeen');
@@ -185,8 +184,6 @@ app.get('/api/chats/:userId', async (req, res) => {
         socket.emit('message_error', { error: error.message });
       }
     });
-  
-    // Handle typing indicators
     socket.on('typing_start', (data) => {
       socket.to(data.chatId).emit('user_typing', {
         userId: data.userId,

@@ -10,9 +10,6 @@ import Profile from './component/Profile';
 import Chatlist from './component/Chatlist';
 import Navbar from './component/Navbar';
 import Shownav from './component/Shownav';
-import { useContext } from 'react';
-import WhatsAppClone from './component/WhatsAppClone';
-import {Authcontext}  from './context';
 import Chatbot from './component/Chatbot';
 function App() {
 
@@ -30,7 +27,6 @@ function App() {
               <Route path='/addpost' element={<AddPost />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/chat' element={<Chatlist />} />
-              <Route path='/whatsapp' element={<WhatsAppClone />} />
               <Route path='/chatbot' element={<Chatbot />} />
             </Routes>
           </AuthPorvider>

@@ -9,6 +9,7 @@ const WhatsAppClone = () => {
   const {username} = useContext(Authcontext);
 
   const [currentUser, setCurrentUser] = useState(null);
+  console.log("to check the current user ",currentUser)
   useEffect(()=>{
     const Userlist = async()=>{
       const res = await axios.get('http://localhost:3003/api/getuser',{withCredentials:true})
@@ -23,6 +24,11 @@ const WhatsAppClone = () => {
     }
     userss()
   },[])
+  const localvideoref = useRef();
+  const remotevideoref = useRef();
+  const [mystream,setmystream] = useState(null)
+  const [remoteStreams,setremotestreams] = useState({})
+  const peerconnections = useRef({});
   const [chats, setChats] = useState([]);
   const [activeChat, setActiveChat] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -212,8 +218,10 @@ async function createOrGetChat({participants}){
   const filteredChats = chats.filter(chat =>
     (chat.participants.find(p => p._id !== currentUser?._id)?.username || '').toLowerCase().includes(searchQuery.toLowerCase())
   );
-
+ 
   return (
+    <>
+    {currentUser &&
     <div className="h-screen w-full flex bg-gray-100 font-sans">
       {/* Left Panel (Chat List) */}
       <div
@@ -340,8 +348,10 @@ async function createOrGetChat({participants}){
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-100">
               {messages && Array.isArray(messages) &&
+              
                 messages.map(message => {
-                  const isOwn = message.sender._id === currentUser?._id;
+                  
+                  const isOwn = message.sender._id === currentUser._id;
                   return (
                     <div key={message._id} className={`flex ${isOwn ? 'justify-end' : 'justify-start'}`}>
                       <div className={`max-w-xs lg:max-w-md px-3 py-2 rounded-xl ${isOwn
@@ -407,7 +417,7 @@ async function createOrGetChat({participants}){
           </div>
         )}
       </div>
-    </div>
+    </div>}</>
   );
 };
 
