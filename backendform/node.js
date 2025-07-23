@@ -25,13 +25,13 @@ const {Kafka} = require('kafkajs');
 
 const io = socket(server, {
     cors: {
-      origin: "http://localhost:5173", 
+      origin: "http://localhost:5173",
       methods: ["GET", "POST"], 
     },
   });
 const kafka = new Kafka({
     clientId: 'my-app',
-    brokers: [  'localhost:9092'],
+    brokers: [ 'localhost:9092'],
 })
 const producer = kafka.producer();
 app.use(cookie());

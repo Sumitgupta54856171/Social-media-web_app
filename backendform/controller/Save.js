@@ -1,4 +1,4 @@
-const Userstatus = require('../model/usersigma')
+const Userstatus = require('../model/post')
 const jwt = require('jsonwebtoken');
 async function poststatus(req,res){
     console.log("hello welcome to get status")
@@ -10,10 +10,8 @@ async function poststatus(req,res){
     jwtsecret = 'ashishgupta2531';
     const data = jwt.verify(token,jwtsecret);
     console.log('decoded data',data);
-   const statusdata = await Userstatus.find({username:data.username})
-   if(!statusdata){
-    return res.status(401).json({error:'No status found'})
-   }
+   
+   
     const {title} = req.body;
     console.log(title);
     console.log(req.file)
@@ -22,13 +20,16 @@ async function poststatus(req,res){
         name: req.file.filename,
         path: req.file.path
     }
+    console.log(data.id)
     const statuspost = {
         image:image,
-        title:title
+        title:title,
+        userid:data.id,
     }
     console.log('image',image);
     console.log('next')
-    const usershow = await Userstatus.findOneAndUpdate({username:data.username}, {$push:{post:statuspost}},{new:true,runValidators: true});
+    const usershow = new Userstatus(statuspost);
+    usershow.save()
  
    console.log('status saved successfully');
 }
@@ -42,20 +43,14 @@ async function poststatus(req,res){
     jwtsecret = 'ashishgupta2531';
     const data = jwt.verify(token,jwtsecret);
     console.log('decoded data',data);
-   const statusdata = await Userstatus.find({username:data.username})
+   const statusdata = await Userstatus.find({userid:data.id})
    if(!statusdata){
     return res.status(401).json({error:'No status found'})
    }
 
-   console.log('statusdata',statusdata);
-   console.log(statusdata[0].post[0])
-   const statusdata1 = statusdata[0].post
-const username = statusdata.map((post)=>post.username)
-  console.log('usename',username);
-
 
         console.log('succes statu send the data')
-        res.status(200).json({message:'status fetched successfully',statusdata1});
+        res.status(200).json({message:'status fetched successfully',statusdata});
    console.log('statusdata',statusdata);
 }
 module.exports = {

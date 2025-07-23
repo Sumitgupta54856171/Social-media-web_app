@@ -18,7 +18,6 @@ function App() {
     <div className='bg-white'>
           <AuthPorvider>
           <Shownav/>
-          
             <Routes>
               <Route path='/' element={<Homepage></Homepage>} />
               <Route path='/login' element={<Inputes />} />

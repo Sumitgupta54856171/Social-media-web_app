@@ -36,6 +36,7 @@ checkAuth();
   useEffect(()=>{
   const getstatus = async ()=>{
         const response = await axios.get('http://localhost:3003/api/getstatus',{withCredentials:true});
+        console.log('statusdata',response.data.statusdata1);
         setStatus(response.data.statusdata1);
        
         }
@@ -62,11 +63,6 @@ getstatus()
                 email: email,
                 password: password
             },{withCredentials: true});
-            if (savedToken) {
-                
-            } else {
-               
-            }
             redirect('/')
         }catch(error){
             console.log(error);

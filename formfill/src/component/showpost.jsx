@@ -87,7 +87,7 @@ const Showpost = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-black min-h-screen relative overflow-hidden">
+    <div className="w-full mx-auto bg-black h-screen relative overflow-hidden flex flex-col items-center justify-center">
       {/* Progress bars */}
       <div className="absolute top-0 left-0 right-0 z-20 flex gap-1 p-2">
         {stories.map((_, index) => (

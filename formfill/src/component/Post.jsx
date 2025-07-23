@@ -10,7 +10,7 @@ const Post = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get('http://localhost:3003/api/getpost', { withCredentials: true });
-        const postsWithUserDetails = response.data.statusdata1.map(post => ({
+        const postsWithUserDetails = response.data.statusdata.map(post => ({
           ...post,
           user: {
             name: username.username || 'Anonymous',

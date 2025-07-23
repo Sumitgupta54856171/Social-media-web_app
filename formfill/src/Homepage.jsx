@@ -22,14 +22,12 @@ function Homepage(){
             </ul>}
            </nav>
             <div className="container mx-auto p-4"> <div className="flex flex-col md:flex-row gap-8">
-           <div className="w-full md:w-1/4">
+           <div className="w-full w-fll">
            {user && <Addstatus></Addstatus>}
            {user && <Staturing ></Staturing>}
            </div>
            <div className="w-full md:w-3/4"> {user && <Post></Post>}
            </div></div></div>
-         
-  
     </div>
     </>)
 }
