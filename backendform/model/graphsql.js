@@ -1,16 +1,32 @@
-const {ApolloServer, gql} = require('apollo-server-express');
+const { gql } = require('apollo-server-express');
+const Status = require("../model/Status")
 const typeDefs = gql`
-type Userpost {
-    post:String,
-    like:number,
-    comment:array,
-    
+
+type image {
+path:String
+name:String
+
 }
+type Userpost {
+    id:ID!
+    image:image
+    userid:ID!
+    comment:[String]
+    statussee:Boolean
+}
+    type Query {
+    hello:String
+    getstatus(id:ID!):Userpost
+    }
 `;
 const resolvers = {
     Query: {
-        hello: () => 'Hello world!',
+        hello:()=>"graphql is work correctly",
+        getstatus:async (parent,{id}) => {
+             return await Status.findById(id);
+        }
+            
     },
 };
-const server = new ApolloServer({typeDefs, resolvers});
-module.exports = server;
+
+module.exports = {typeDefs,resolvers}

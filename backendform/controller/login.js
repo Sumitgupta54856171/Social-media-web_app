@@ -15,6 +15,7 @@ async function login(req,res){
             
             const isMatch = await bcrypt.compare(password,user.password);
             if(!isMatch){
+                console.log(await bcrypt.compare(password,user.password))
                 return console.log('Invalid email or password');
             }
             const payload = {

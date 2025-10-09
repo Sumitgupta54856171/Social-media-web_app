@@ -11,7 +11,7 @@ const save = require('./controller/Save');
 const uploads = require('./controller/Uploads');
 const session = require('express-session');
 const cookie = require('cookie-parser');
-const dbs = require('./config/postgresql');
+
 const jwtverify =require('./controller/jwt');
 const Status = require('./controller/Status')
 const { setchat } = require('./controller/chat');
@@ -22,7 +22,8 @@ const User = require('./model/usersigma')
 const Chat = require('./model/chat')
 const Message = require('./model/message')
 const {Kafka} = require('kafkajs');
-
+const {ApolloServer} = require('apollo-server-express');
+const {typeDefs,resolvers} = require('./model/graphsql')
 const io = socket(server, {
     cors: {
       origin: "http://localhost:5173",
@@ -33,7 +34,8 @@ const kafka = new Kafka({
     clientId: 'my-app',
     brokers: [ 'localhost:9092'],
 })
-const producer = kafka.producer();
+const servers = new ApolloServer({typeDefs,resolvers})
+
 app.use(cookie());
 app.use(session({
 	secret: 'your_secret_key',
@@ -103,6 +105,11 @@ app.get('/api/chats/:userId', async (req, res) => {
 	  res.status(500).json({ error: error.message });
 	}
   });
+
+  const producer = kafka.producer();
+  const consumer = kafka.consumer({groupId:"chat-group"});
+   
+
   const connectedUsers = new Map();
   
   io.on('connection', (socket) => {
@@ -228,12 +235,20 @@ app.post('/api/search',search);
 app.post('/api/following',savefollower);
 app.get('/api/getuser',finduser);
 
+async function startApolloServer(){
+  await servers.start()
 
-
-const port =3003;
+  servers.applyMiddleware({app:app,path:'/graphql',bodyParserConfig:false})
+  const port =3003;
 server.listen(port,()=>{
 	console.log(`server is running ${port}`);
 	client;
 		redis;
-		dbs;
+		
 })
+}
+
+startApolloServer();
+
+
+
