@@ -1,20 +1,15 @@
 import { useState,useEffect } from "react"
 import axios from "axios"
+import { useContext } from "react";
+import { Authcontext } from "../context";
+import { CloudUpload } from "lucide-react";
 function Profile(){
-    const [profile,setprofile] = useState('')
-useEffect(()=>{
-    const fetchprofile = async()=>{
-        const response = await axios.get('http://localhost:3003/api/getprofile',{withCredentials: true})
-        console.log('profile data is fetch')
-        console.log(response.data)
-        setprofile(response.data.profiledata)
-        console.log(profile)
-    } 
-    fetchprofile();  
-},[])
+    
+    const {userprofile} = useContext(Authcontext)
 
-const profileData =profile
-const userProfile = profileData[0];
+
+
+const userProfile = userprofile[0]
 
 if (!userProfile) {
   return (

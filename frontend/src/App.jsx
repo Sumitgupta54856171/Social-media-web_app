@@ -11,6 +11,7 @@ import Chatlist from './component/Chatlist';
 import Navbar from './component/Navbar';
 import Shownav from './component/Shownav';
 import Chatbot from './component/Chatbot';
+import WhatsAppStatus from './component/StatuV1';
 function App() {
 
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path='/profile' element={<Profile />} />
               <Route path='/chat' element={<Chatlist />} />
               <Route path='/chatbot' element={<Chatbot />} />
+              <Route path="/status/v1" element={<WhatsAppStatus/>}></Route>
             </Routes>
           </AuthPorvider>
     </div>         

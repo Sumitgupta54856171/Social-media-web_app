@@ -107,12 +107,14 @@ app.get('/api/chats/:userId', async (req, res) => {
   });
 
   const producer = kafka.producer();
-  const consumer = kafka.consumer({groupId:"chat-group"});
+  const consumer = kafka.consumer({groupId: "chat-group"});
    
 
   const connectedUsers = new Map();
   
-  io.on('connection', (socket) => {
+  io.on('connection',async (socket) => {
+    await producer.connect();
+    await consumer.connect();
     console.log('User connected:', socket.id);
   
     // User joins
@@ -146,7 +148,19 @@ app.get('/api/chats/:userId', async (req, res) => {
     socket.on('send_message', async (messageData) => {
       try {
         const { chatId, senderId, content, messageType = 'text' } = messageData;
-        
+        console.log("this chat data of user : ",messageData)
+         const data = {
+          chatId,
+          sender: senderId,
+          content,
+          messageType,
+          timestamp: new Date()
+         }
+         console.log(data)
+        await producer.send({
+          topic:"chat-topic",
+          messages:[{value:JSON.stringify(data)}],
+        })
         // Save message to database
         const message = new Message({
           chatId,
@@ -171,10 +185,19 @@ app.get('/api/chats/:userId', async (req, res) => {
         const populatedMessage = await Message.findById(message._id)
         console.log('send message data')
          console.log(populatedMessage)
+        await consumer.subscribe({topic:"chat-topic",fromBeginning:true})
         
         // Send message to chat room
-        io.emit('receive_message', populatedMessage);
+
+  consumer.run({
+    eachMessage: async ({ message }) => {
+      const msg = JSON.parse(message.value.toString());
+      io.emit('receive_message', msg); // send message to all connected clients
+    },
+  });
+
         
+       
         const updatedChat = await Chat.findById(chatId)
           .populate('participants', 'username avatar isOnline lastSeen')
           .populate('lastMessage.sender', 'username');

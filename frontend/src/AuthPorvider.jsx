@@ -12,6 +12,7 @@ function AuthPorvider({children}){
     const [status,setStatus] = useState([]);
     const [error,serError]=useState('');
     const navigate = useNavigate();
+    const [userprofile,setuserprofile] = useState([])
     const [current,setCurrent] = useState();
    const  handleStatus=()=>{
         setstatus(!showstatu);
@@ -20,6 +21,20 @@ function AuthPorvider({children}){
   function handleclick(){
     setShownav(!shownav);
   }
+  useEffect(()=>{
+async function userdata (){
+  try{
+const response = await axios.get("http://localhost:3003/api/getprofile",{withCredentials:true})
+ setuserprofile(response.data.profiledata);
+
+  }catch(err){
+   console.log("this is usedata error : ",err)
+  }
+
+}
+userdata();
+
+},[current])
 useEffect(()=>{
   const checkAuth = async ()=>{
   const response = await axios.get('http://localhost:3003/api/verify',{withCredentials: true});
@@ -90,7 +105,7 @@ getstatus()
     }
 
     return(
-        <Authcontext.Provider value={{user,error,login,logout,register,username,status,showstatu,handleStatus,searchdata,search,handleclick,shownav,current}}>
+        <Authcontext.Provider value={{userprofile,user,error,login,logout,register,username,status,showstatu,handleStatus,searchdata,search,handleclick,shownav,current}}>
             {children}
         </Authcontext.Provider>
     )

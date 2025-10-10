@@ -1,4 +1,5 @@
 const Userstatus = require('../model/Status');
+const userdata = require("../model/usersigma")
 const jwt = require('jsonwebtoken');
 async function addstatus(req,res){
     console.log("hello welcome to get status")
@@ -61,7 +62,7 @@ const Profile =async(req,res)=>{
     jwtsecret = 'ashishgupta2531';
     const data = jwt.verify(token,jwtsecret);
     console.log('decoded data',data);
-    const profiledata = await Userstatus.find({username:data.username})
+    const profiledata = await userdata.find({email:data.email})
     console.log('profiledata',profiledata);
     return res.status(200).json({message:'profile fetched successfully',profiledata});
 }

@@ -18,6 +18,7 @@ function verifyToken(req, res) {
         }
         console.log("the data of session is fetch",decoded);
         res.json({message: "Token verified successfully", user: decoded});
+        return decoded
 }
 
 module.exports = { verifyToken };

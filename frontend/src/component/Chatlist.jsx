@@ -6,9 +6,10 @@ import { useContext } from 'react';
 import { Authcontext } from '../context';
 
 const WhatsAppClone = () => {
-  const {username} = useContext(Authcontext);
+  const {username,userprofile} = useContext(Authcontext);
 
-  const [currentUser, setCurrentUser] = useState(null);
+  const currentUser = userprofile
+  
   console.log("to check the current user ",currentUser)
   useEffect(()=>{
     const Userlist = async()=>{
@@ -17,18 +18,7 @@ const WhatsAppClone = () => {
     }
     Userlist()
   },[])
-  useEffect(()=>{
-    const userss = async( )=>{
-    const userdata = await axios.get('http://localhost:3003/api/getprofile',{withCredentials:true})
-    setCurrentUser(userdata.data.profiledata[0])
-    }
-    userss()
-  },[])
-  const localvideoref = useRef();
-  const remotevideoref = useRef();
-  const [mystream,setmystream] = useState(null)
-  const [remoteStreams,setremotestreams] = useState({})
-  const peerconnections = useRef({});
+
   const [chats, setChats] = useState([]);
   const [activeChat, setActiveChat] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -41,10 +31,10 @@ const WhatsAppClone = () => {
   const socket = useRef(io('http://localhost:3003'))
  useEffect(() => {
   // Only run if currentUser is a valid object with an _id
-  if (currentUser && currentUser._id) {
+  if (userprofile[0] && userprofile[0]._id) {
     const fetchchat = async () => {
       try {
-        const res = await axios.get(`http://localhost:3003/api/chats/${currentUser._id}`, { withCredentials: true });
+        const res = await axios.get(`http://localhost:3003/api/chats/${userprofile[0]._id}`, { withCredentials: true });
         setChats(Array.isArray(res.data.chats) ? res.data.chats : []);
       } catch (err) {
         setChats([]); // fallback to empty array on error
@@ -54,7 +44,7 @@ const WhatsAppClone = () => {
   } else {
     setChats([]); // clear chats if currentUser is not valid
   }
-}, [currentUser && currentUser._id]);
+}, [userprofile[0] && userprofile[0]._id]);
 async function createOrGetChat({participants}){
   const res = await axios.post('http://localhost:3003/api/chats',{participants},{withCredentials:true}) 
  return res.data.chat
@@ -161,7 +151,7 @@ async function createOrGetChat({participants}){
       };
       socket.current.emit('send_message', {
         chatId: activeChat._id,
-        senderId: currentUser._id,
+        senderId: userprofile[0]._id,
         content: newMessage
       });
    
@@ -187,7 +177,7 @@ async function createOrGetChat({participants}){
     if (existingChat&& existingChat !== null&& existingChat !== undefined) {
       setActiveChat(existingChat);
     } else {
-      const participants = [currentUser._id, user._id];
+      const participants = [userprofile[0]._id, user._id];
       const newChat = await createOrGetChat({participants});
       setChats(prev => [newChat, ...prev]);
       setActiveChat(newChat);
@@ -213,7 +203,7 @@ async function createOrGetChat({participants}){
     return `${diffDays}d ago`;
   };
 
-  const otherUser = activeChat ? activeChat.participants.find(p => p._id !== currentUser?._id) : null;
+  const otherUser = activeChat ? activeChat.participants.find(p => p._id !== userprofile[0]?._id) : null;
 
   const filteredChats = chats.filter(chat =>
     (chat.participants.find(p => p._id !== currentUser?._id)?.username || '').toLowerCase().includes(searchQuery.toLowerCase())
@@ -258,7 +248,7 @@ async function createOrGetChat({participants}){
               <div className="p-3 bg-green-50 text-green-700 text-sm font-medium">
                 Start new conversation
               </div>
-              {users.filter(u => u._id !== currentUser?._id).map(user => (
+              {users.filter(u => u._id !== userprofile[0]?._id).map(user => (
                 <div
                   key={user._id}
                   onClick={() => startNewChat(user)}
@@ -283,7 +273,8 @@ async function createOrGetChat({participants}){
             </div>
           ) : (
             filteredChats.map(chat => {
-              const otherParticipant = chat.participants.find(p => p._id !== currentUser?._id);
+              
+              const otherParticipant = chat.participants.find(p => p._id !== userprofile[0]?._id);
               return (
                 <div
                   key={chat._id}
@@ -302,7 +293,7 @@ async function createOrGetChat({participants}){
                     </div>
                     {chat.lastMessage && (
                       <p className="text-sm text-gray-600 truncate">
-                        {chat.lastMessage.sender === currentUser?._id ? 'You: ' : ''}
+                        {chat.lastMessage.sender === userprofile[0]?._id ? 'You: ' : ''}
                         {chat.lastMessage.content}
                       </p>
                     )}
@@ -351,15 +342,17 @@ async function createOrGetChat({participants}){
               
                 messages.map(message => {
                   
-                  const isOwn = message.sender._id === currentUser._id;
+                  const senderId = typeof message.sender === 'object' ? message.sender._id : message.sender;
+                  const isOwn = senderId === userprofile[0]._id;
+                  const containerClass = isOwn ? 'message-container-own' : 'message-container-other';
+                    const bubbleStylingClass = isOwn ? 'bubble-own' : 'bubble-other';
+                    const timestampStylingClass = isOwn ? 'timestamp-own' : 'timestamp-other';
+                  console.log("check the which thing is not work correctly : ",message.sender._id === userprofile[0]._id)
                   return (
-                    <div key={message._id} className={`flex ${isOwn ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`max-w-xs lg:max-w-md px-3 py-2 rounded-xl ${isOwn
-                        ? 'bg-green-500 text-white'
-                        : 'bg-white text-gray-800 border border-gray-200'
-                        }`}>
+                    <div key={message._id} className={containerClass}>
+                      <div className={`max-w-xs lg:max-w-md px-3 py-2 rounded-xl ${bubbleStylingClass}`}>
                         <div className="text-sm">{message.content}</div>
-                        <div className={`text-xs mt-1 ${isOwn ? 'text-green-100' : 'text-gray-500'}`}>
+                        <div className={`text-xs mt-1 ${timestampStylingClass}`}>
                           {formatTime(message.timestamp)}
                         </div>
                       </div>

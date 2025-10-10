@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/* Base Container Alignment */
+.message-container-own {
+  display: flex;
+  justify-content: flex-end; /* isOwn TRUE: Right align */
+  margin-bottom: 8px; /* Extra space */
+}
+
+.message-container-other {
+  display: flex;
+  justify-content: flex-start; /* isOwn FALSE: Left align */
+  margin-bottom: 8px;
+}
+
+/* Bubble Styling */
+.message-bubble {
+  max-width: 250px; /* max-w-xs equivalent */
+  padding: 8px 12px; /* px-3 py-2 equivalent */
+  border-radius: 12px; /* rounded-xl equivalent */
+}
+
+.bubble-own {
+  /* bg-green-500 text-white equivalent */
+  background-color: #10b981; /* Green 500 */
+  color: white;
+}
+
+.bubble-other {
+  /* bg-white text-gray-800 border border-gray-200 equivalent */
+  background-color: white;
+  color: #1f2937; /* Gray 800 */
+  border: 1px solid #e5e7eb; /* Gray 200 */
+}
+
+/* Timestamp Styling */
+.timestamp-own {
+  /* text-green-100 equivalent */
+  color: #d1fae5; 
+}
+
+.timestamp-other {
+  /* text-gray-500 equivalent */
+  color: #6b7280; 
+}
