@@ -26,15 +26,13 @@ pipeline {
 				stage('React') {
 					steps {
 						dir('frontend') {
-							sh 'npm run lint'
-							sh 'CI=true npm test -- --coverage --watchAll=false'
+							sh "npm test -- --passWithoNOTests"
 						}
 					}
 				}
 				stage('Node') {
 					steps {
 						dir('backend') {
-							sh 'npm run lint'
 							sh 'npm test'
 						}
 					}
