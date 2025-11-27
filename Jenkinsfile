@@ -79,12 +79,11 @@ pipeline {
 			// Corrected Path: '**' ka matlab kisi bhi sub-folder mein dhoondo
 			junit '**/junit.xml'
 		}
-		failure {
-			// 'emailtext' typo tha, usually 'emailext' plugin use hota hai
-			emailext (
+		failure{
+			emailext(
 				subject : "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-				body: "Console Logs: ${env.BUILD_URL}console",
-				to: "${DEFAULT_RECIPIENTS}"
+				body: "Console: ${env.BUILD_URL}console",
+				to: "sg54856171@gmail.com" // <--- Change this
 			)
 		}
 		success {
