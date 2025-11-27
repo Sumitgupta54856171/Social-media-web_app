@@ -1,8 +1,17 @@
 pipeline {
 	agent any
-
+	tools {
+		// Updated to match the name 'Nodejs' from your screenshot
+		nodejs 'Nodejs'
+	}
 	stages {
 		stage("frontend step"){
+			stage('Checkout SCM') {
+				steps {
+					// GitHub/GitLab se latest code pull karega
+					checkout scm
+				}
+			}
 			steps{
 				dir("frontend"){sh "npm install"}
 			}
