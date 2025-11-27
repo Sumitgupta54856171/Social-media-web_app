@@ -1,5 +1,8 @@
 pipeline {
 	agent any
+	environment {
+		CI = 'true'
+	}
 	tools {
 		// Updated to match the name 'Nodejs' from your screenshot
 		nodejs 'Nodejs'
@@ -13,27 +16,31 @@ pipeline {
 		}
 		stage("frontend step"){
 			steps{
-				dir("frontend"){sh "npm install"}
+				dir("frontend"){
+					sh "npm ci"
+				}
 			}
 		}
 		stage("backend step") {
 			steps{
-				dir("backend"){sh "npm install"}
+				dir("backend"){
+					sh "npm ci"
+				}
 			}
 		}
-		stage('Test & Lint') {
+		stage('Test with jest-junit') {
 			parallel {
 				stage('React') {
 					steps {
 						dir('frontend') {
-							sh "npm test -- --passWithoNOTests"
+							sh "npm test -- --reporters=default --reporters=jest-junit"
 						}
 					}
 				}
 				stage('Node') {
 					steps {
 						dir('backend') {
-							sh 'npm test'
+							sh 'npm run test'
 						}
 					}
 				}
@@ -42,7 +49,7 @@ pipeline {
 		stage("build image"){
 			steps{
 				dir("frontend"){
-				sh "docker build -t social-media-frontened ."
+					sh "docker build -t social-media-frontened ."
 				}
 			}
 		}
@@ -55,16 +62,36 @@ pipeline {
 		}
 
 	}
+
 	post{
-		failure{
-			emailtext(
-				subject : "buidl failed ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-				body: "Console: ${env.BUILD_URL}console",
-				to: '${DEFAULT_RECIPIENTS}'
+		always{
+			echo 'Archiving Test Results .. '
+			junit '**/junit.xml'
+
+
+
+
+
+			f
+				re{
+			ema
+					t(
+				subject : "buidl failed ${env.JOB_NAME} #${env.BUILD_NUMBER}
+					",
+				body: "Console: ${env.BUILD_URL}
+					console",
+				to: '${DEF
+				_
+			I
+			NTS}'
 			)
-		}
+				}
 		success{
-			echo ' ✅ Social-media app deployed successfully.'
+			echo ' ✅ Social-media app deplo
+
+		c
+	essfully.'
 		}
 	}
+}
 }
