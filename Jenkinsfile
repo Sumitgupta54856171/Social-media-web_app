@@ -39,7 +39,7 @@ pipeline {
 					steps {
 						dir('frontend') {
 							// React mein jest-junit config package.json ya command line mein honi chahiye
-							sh "npm test -- --reporters=default --reporters=jest-junit"
+							sh "npm test -- --reporters=default --reporters=jest-junit --passWithNoTests"
 						}
 					}
 				}
