@@ -1,9 +1,6 @@
 pipeline {
-	agent{
-		docker{
-			image:"node:22-alphine"
-		}
-	}
+	agent any
+
 	stages {
 		stage("build"){
 			steps{
