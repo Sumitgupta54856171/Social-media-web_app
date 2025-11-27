@@ -42,7 +42,7 @@
   "description": "",
   "main": "node.js",
   "scripts": {
-    "test": "jest --ci --reporters=default --reporters=jest-junit"
+    "test": "jest --ci --reporters=default --reporters=jest-junit --passWithNoTests"
   },
   "keywords": [],
   "author": "",

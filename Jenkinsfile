@@ -79,13 +79,6 @@ pipeline {
 			// Corrected Path: '**' ka matlab kisi bhi sub-folder mein dhoondo
 			junit '**/junit.xml'
 		}
-		failure{
-			emailext(
-				subject : "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-				body: "Console: ${env.BUILD_URL}console",
-				to: "sg54856171@gmail.com" // <--- Change this
-			)
-		}
 		success {
 			echo ' ✅ Social-media app deployed successfully.'
 		}
