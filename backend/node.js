@@ -15,13 +15,17 @@ const jwtverify =require('./controller/jwt');
 const Status = require('./controller/Status')
 const { setchat } = require('./controller/chat');
 const socket = require('socket.io');
+// ✅ Fix 1: Ye line top par add karein
+const { ApolloServer } =require ('@apollo/server');
+const { expressMiddleware } = require ('@as-integrations/express5');
+const { ApolloServerPluginDrainHttpServer } =require ('@apollo/server/plugin/drainHttpServer');
 const http = require('http');
+// ✅ Ye sahi hai (Apollo v4)
 const server = http.createServer(app);
 const User = require('./model/usersigma')
 const Chat = require('./model/chat')
 const Message = require('./model/message')
 const {Kafka} = require('kafkajs');
-const {ApolloServer} = require('apollo-server-express');
 const {typeDefs,resolvers} = require('./model/graphsql')
 const io = socket(server, {
     cors: {
@@ -260,7 +264,7 @@ app.get('/api/getuser',finduser);
 async function startApolloServer(){
   await servers.start()
 
-  servers.applyMiddleware({app:app,path:'/graphql',bodyParserConfig:false})
+  app.use("/graphql",express.json(),expressMiddleware(servers))
   const port =3003;
 server.listen(port,()=>{
 	console.log(`server is running ${port}`);
