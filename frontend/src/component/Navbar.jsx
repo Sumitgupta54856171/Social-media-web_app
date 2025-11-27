@@ -1,6 +1,5 @@
 import {Link} from "react-router-dom";
 import {BookLock, GalleryThumbnails, Home,HomeIcon,ProjectorIcon,User, UserIcon} from 'lucide-react'
-import Liveoption from "./Liveoption";
 import { Authcontext } from "../context";
 import { useContext } from "react";
 function Navbar(){

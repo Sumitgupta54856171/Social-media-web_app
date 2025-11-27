@@ -11,7 +11,6 @@ const save = require('./controller/Save');
 const uploads = require('./controller/Uploads');
 const session = require('express-session');
 const cookie = require('cookie-parser');
-
 const jwtverify =require('./controller/jwt');
 const Status = require('./controller/Status')
 const { setchat } = require('./controller/chat');

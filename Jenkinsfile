@@ -1,0 +1,71 @@
+pipeline {
+	agent{
+		docker{
+			image:"node:22-alphine"
+		}
+	}
+	stages {
+		stage("build"){
+			steps{
+				sh"node --version"
+			}
+		}
+		stage("frontend step"){
+			steps{
+				dir("frontend"){sh "npm install"}
+			}
+		}
+		stage("backend step") {
+			steps{
+				dir("backend"){sh "npm install"}
+			}
+		}
+		stage{
+			parallel{
+				stage("React-test"){
+					steps{
+						dir("frontend"){
+							sh"npm run lint"
+							sh "CI=true npm test -- --coverage --watchAll=fals"
+						}
+					}
+				}
+				stage("Node tests"){
+					steps{
+						dir("backend"){
+							sh "npm run lint"
+							sh "npm test"
+						}
+					}
+				}
+			}
+		}
+		stage("build image"){
+			steps{
+				dir("frontend"){
+				sh "docker build -t social-media-frontened ."
+				}
+			}
+		}
+		stage("build frontend image"){
+			steps{
+				dir("backend"){
+					sh "docker build -t social-media-backend ."
+				}
+			}
+		}
+
+	}
+	post{
+		failure{
+			emailtext(
+				subject : "buidl failed ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+				body: "Console: ${env.BUILD_URL}console",
+				to: '${DEFAULT_RECIPIENTS}'
+			)
+		}
+		success{
+			echo ' ✅ Social-media app deployed successfully.'
+		}
+	}
+}
