@@ -5,13 +5,13 @@ pipeline {
 		nodejs 'Nodejs'
 	}
 	stages {
-		stage("frontend step"){
-			stage('Checkout SCM') {
-				steps {
-					// GitHub/GitLab se latest code pull karega
-					checkout scm
-				}
+		stage('Checkout SCM') {
+			steps {
+				// GitHub/GitLab se latest code pull karega
+				checkout scm
 			}
+		}
+		stage("frontend step"){
 			steps{
 				dir("frontend"){sh "npm install"}
 			}
