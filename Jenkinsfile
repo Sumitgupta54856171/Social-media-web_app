@@ -17,21 +17,21 @@ pipeline {
 				dir("backend"){sh "npm install"}
 			}
 		}
-		stage{
-			parallel{
-				stage("React-test"){
-					steps{
-						dir("frontend"){
-							sh"npm run lint"
-							sh "CI=true npm test -- --coverage --watchAll=fals"
+		stage('Test & Lint') {
+			parallel {
+				stage('React') {
+					steps {
+						dir('frontend') {
+							sh 'npm run lint'
+							sh 'CI=true npm test -- --coverage --watchAll=false'
 						}
 					}
 				}
-				stage("Node tests"){
-					steps{
-						dir("backend"){
-							sh "npm run lint"
-							sh "npm test"
+				stage('Node') {
+					steps {
+						dir('backend') {
+							sh 'npm run lint'
+							sh 'npm test'
 						}
 					}
 				}
