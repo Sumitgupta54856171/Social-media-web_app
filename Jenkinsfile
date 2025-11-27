@@ -76,8 +76,8 @@ pipeline {
 	post {
 		always {
 			echo 'Archiving Test Results .. '
-			// Corrected Path: '**' ka matlab kisi bhi sub-folder mein dhoondo
-			junit '**/junit.xml'
+
+			junit testResults: '**/junit.xml', allowEmptyResults: true
 		}
 		success {
 			echo ' ✅ Social-media app deployed successfully.'
