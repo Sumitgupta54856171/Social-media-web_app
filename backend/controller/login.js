@@ -10,7 +10,7 @@ async function login(req,res){
         try{
             const user = await User.findOne({email});
             if(!user){
-                return console.log('Invalid email or password');
+                return console.log('USER NOT FOUND');
             }
             
             const isMatch = await bcrypt.compare(password,user.password);
@@ -30,10 +30,10 @@ async function login(req,res){
                 maxAge:60*60*24*7*1000
             });
             setsession(user.username,payload);
-            res.json({ token });
+            res.json({ message: 'Login successful' });
             console.log('Login successful');
         }catch(err){
-            console.log(err);
+            console.log({message:'Error logging in',err});
         }
 }
 async function register(req,res){
@@ -55,11 +55,12 @@ async function register(req,res){
     });
     newUser.save()
         .then(() => {
+            res.status(201).send('User registered successfully');
             console.log('User registered successfully');
         })
         .catch((err) => {
             console.error('Error registering user:', err);
-            res.status(500).send('Error registering user');
+            res.status(500).send('please try again later');
         });
 }
 function logout(){

@@ -10,13 +10,14 @@ import { useContext, useState, useEffect } from "react";
 
 function Inputes() {
     // --- LOGIC (UNCHANGED) ---
-    const { login } = useContext(Authcontext);
+    const { login,message } = useContext(Authcontext);
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
         login(email, password);
+        console.log("the message of the body is ",message)
     };
     // -------------------------
 
@@ -30,11 +31,11 @@ function Inputes() {
 
     return (
         <div className="min-h-screen w-full bg-[#F3F4F6] flex items-center justify-center p-4 font-sans relative overflow-hidden">
-
+            {message != null && <div className="bg-red-400 top -20 h-20 w-60 rounded-xl">{message}</div>}
             {/* Background Ambient Glows */}
             <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-200/40 rounded-full blur-[100px] animate-pulse-slow"></div>
             <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-200/40 rounded-full blur-[100px] animate-pulse-slow delay-1000"></div>
-
+             <div className="top-20 justify-center "></div>
             {/* Main Card */}
             <div className={`
         w-full max-w-[1100px] bg-white rounded-[32px] shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[650px] z-10
@@ -129,6 +130,7 @@ function Inputes() {
                             <div className={`transition-all duration-700 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                                 <button
                                     type="submit"
+                                    onClick={handleSubmit}
                                     className="group w-full bg-[#0F172A] text-white rounded-xl py-3.5 font-bold shadow-lg shadow-slate-900/20 hover:shadow-slate-900/40 active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden relative"
                                 >
                                     <span className="relative z-10">Sign In</span>

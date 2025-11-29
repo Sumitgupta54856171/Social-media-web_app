@@ -11,6 +11,7 @@ function AuthPorvider({children}){
     const [username,setUsername] =useState(null);
     const [status,setStatus] = useState([]);
     const [error,serError]=useState('');
+    const [message,setMessage]=useState('');
     const navigate = useNavigate();
     const [userprofile,setuserprofile] = useState([])
     const [current,setCurrent] = useState();
@@ -79,6 +80,8 @@ getstatus()
                 password: password
             },{withCredentials: true});
             redirect('/')
+            console.log(res.data)
+            setMessage(res.data.message);
         }catch(error){
             console.log(error);
             if(error.response && error.response.status === 401){
@@ -96,6 +99,13 @@ getstatus()
             password: password
         }
         await axios.post('http://localhost:3003/api/register',userData,{withCredentials: true})
+            .then((res) => {
+                console.log(res.data)
+                setMessage(res.data.message);
+
+            }).catch((error) => {
+                setMessage(error)
+            })
         navigate('/login');
     }
 

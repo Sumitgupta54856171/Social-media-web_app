@@ -11,10 +11,11 @@ import { User, Mail, Lock, Eye, EyeOff, Facebook, Chrome, ArrowRight, Sparkles }
 
 function Signup() {
     // --- YOUR ORIGINAL LOGIC (UNCHANGED) ---
-    const { register } = useContext(Authcontext);
+    const { register,message } = useContext(Authcontext);
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
     const [username, setusername] = useState('');
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -152,6 +153,7 @@ function Signup() {
                             {/* Main Button */}
                             <div className={`transition-all duration-700 delay-600 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                                 <button
+                                    onClick={handleSubmit}
                                     type="submit"
                                     className="group w-full bg-[#0F172A] text-white rounded-xl py-3.5 font-bold shadow-lg shadow-slate-900/20 hover:shadow-slate-900/40 active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden relative"
                                 >
