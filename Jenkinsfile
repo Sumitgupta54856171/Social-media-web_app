@@ -6,7 +6,7 @@ pipeline {
 	}
 
 	environment {
-		// VERY IMPORTANT: Iske bina React tests atak jayenge
+		
 		CI = 'true'
 	}
 
@@ -17,7 +17,7 @@ pipeline {
 			}
 		}
 
-		// Dependencies install - Parallel (Optional but faster)
+		
 		stage("Install Dependencies") {
 			parallel {
 				stage("Frontend Install") {

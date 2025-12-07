@@ -14,10 +14,12 @@ const statusSchema = new mongoose.Schema(
 			type:String,
     }
 	},
-	see:{
-		type:Number,
-		default:0,
-	},
+	see:[{
+		userid:{
+			type:mongoose.Schema.Types.ObjectId,
+			ref:"userSigm"
+		}
+	}],
 	statussee:{
 		type:Boolean,
 		default: false,
