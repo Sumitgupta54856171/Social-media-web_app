@@ -1,12 +1,8 @@
 import { Mail, Lock, Eye, EyeOff, Facebook, Chrome, ArrowRight, Sparkles } from "lucide-react";
 import { Authcontext } from "./context";
 import { useContext, useState, useEffect } from "react";
-// --- MOCK CONTEXT (Delete in production) ---
+import { Link } from "react-router";
 
-// -------------------------------------------
-
-// UNCOMMENT REAL IMPORT:
-// import { Authcontext } from "./context";
 
 function Inputes() {
     // --- LOGIC (UNCHANGED) ---
@@ -160,7 +156,7 @@ function Inputes() {
                             </div>
 
                             <p className={`text-center text-slate-500 text-sm mt-8 transition-all duration-700 delay-[800ms] ${mounted ? 'opacity-100' : 'opacity-0'}`}>
-                                Don't have an account? <a href="#" className="text-blue-600 font-semibold hover:underline">Create free account</a>
+                                Don't have an account? <Link to="/signup" className="text-blue-600 font-semibold hover:underline">Create free account</Link>
                             </p>
                         </form>
                     </div>

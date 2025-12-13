@@ -17,7 +17,8 @@ const statusSchema = new mongoose.Schema(
 	see:[{
 		userid:{
 			type:mongoose.Schema.Types.ObjectId,
-			ref:"userSigm"
+			ref:"userSigm",
+			unique:true
 		}
 	}],
 	statussee:{
@@ -37,10 +38,10 @@ const statusSchema = new mongoose.Schema(
 	},
       createdAt: {
         type: Date,
-        default: Date.now // Default to the current time when a document is created
+        default: Date.now 
     }
 	}
    // Index for sorting by creation date
 )
-statusSchema.index({ createdAt: -1 },{expireAfterSecond:1440}); 
+statusSchema.index({ createdAt: 1 },{expireAfterSecond:86400}); 
 module.exports = mongoose.model("status",statusSchema)

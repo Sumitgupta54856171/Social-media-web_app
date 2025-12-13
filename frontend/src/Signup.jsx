@@ -2,6 +2,7 @@
 import { useContext,useState ,useEffect} from "react";
 import { Authcontext } from "./context";
 import { User, Mail, Lock, Eye, EyeOff, Facebook, Chrome, ArrowRight, Sparkles } from "lucide-react";
+import {Link} from "react-router-dom"
 
 
 // -------------------------------------------
@@ -184,7 +185,7 @@ function Signup() {
                             </div>
 
                             <p className={`text-center text-slate-500 text-sm mt-6 transition-all duration-700 delay-[900ms] ${mounted ? 'opacity-100' : 'opacity-0'}`}>
-                                Already have an account? <a href="#" className="text-blue-600 font-semibold hover:underline">Log In</a>
+                                Already have an account? <Link to="/login" className="text-blue-600 font-semibold hover:underline">Log In</Link>
                             </p>
                         </form>
                     </div>

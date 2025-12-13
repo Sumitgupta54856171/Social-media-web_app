@@ -260,6 +260,7 @@ app.get('/api/getprofile',Status.Profile)
 app.post('/api/search',search);
 app.post('/api/following',savefollower);
 app.get('/api/getuser',finduser);
+app.get('/api/comment/',)
 
 async function startApolloServer(){
   await servers.start()
@@ -273,6 +274,8 @@ server.listen(port,()=>{
 		
 })
 }
+
+
 
 startApolloServer();
 
