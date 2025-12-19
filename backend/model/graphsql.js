@@ -2,6 +2,7 @@ const { gql } = require('graphql-tag')
 const Status = require("../model/Status")
 const post = require("../model/post");
 const message = require('./message');
+const {io}= require("../node.js")
 const typeDefs = gql`
 
 type image {
@@ -14,6 +15,7 @@ type comments {
     text:String
 
 }
+ 
 type Userpost {
     id:ID!
     image:image
@@ -33,11 +35,20 @@ type Userpost {
         userid:String
         text:String
     }
+    input Liketo {
+    userid: String
+    }
+    type likepush {
+        useid:String
+    }
+    
     type Mutation {
         Postcomment(id: String,comment: CommentInput):commentPost
+         PushLike(id:String,Like:Liketo):likepush
     }
 `;
 const resolvers = {
+    
     Query:{
         hello:()=>"graphql is work correctly",
         getstatus:async (parent,{id}) => {
@@ -47,6 +58,9 @@ const resolvers = {
         Mutation :{
             Postcomment:async(_,{id,comment})=>{
                 post.findByIdAndUpdate(id,{$push:{Comments:comment}})
+            },
+            PushLike:async(_,{id,like})=>{
+                post.findByIdAndUpdate(id,{$push:{like:like}})
             }
         }
       

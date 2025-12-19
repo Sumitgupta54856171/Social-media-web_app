@@ -1,3 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="0" failures="0" errors="0" time="0.003">
+<testsuites name="Backend Tests" tests="22" failures="6" errors="0" time="34.051">
+  <testsuite name="Status API" errors="0" failures="2" skipped="0" timestamp="2025-12-16T17:17:22" time="13.125" tests="7">
+    <testcase classname="Status API POST /api/addstatus should add status with valid token and file" name="Status API POST /api/addstatus should add status with valid token and file" time="1.48">
+    </testcase>
+    <testcase classname="Status API POST /api/addstatus should reject request without token" name="Status API POST /api/addstatus should reject request without token" time="0.135">
+    </testcase>
+    <testcase classname="Status API POST /api/addstatus should reject request without username" name="Status API POST /api/addstatus should reject request without username" time="0.128">
+      <failure>MongoServerError: E11000 duplicate key error collection: social_media_test.usersigmas index: username_1 dup key: { username: &quot;testuser&quot; }
+    at InsertOneOperation.handleOk (/home/vscode/Social-media-web_app/backend/node_modules/mongoose/node_modules/mongodb/src/operations/insert.ts:79:13)
+    at tryOperation (/home/vscode/Social-media-web_app/backend/node_modules/mongoose/node_modules/mongodb/src/operations/execute_operation.ts:290:26)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at executeOperation (/home/vscode/Social-media-web_app/backend/node_modules/mongoose/node_modules/mongodb/src/operations/execute_operation.ts:119:12)
+    at Collection.insertOne (/home/vscode/Social-media-web_app/backend/node_modules/mongoose/node_modules/mongodb/src/collection.ts:294:12)</failure>
+    </testcase>
+    <testcase classname="Status API GET /api/getstatus should get status with valid token" name="Status API GET /api/getstatus should get status with valid token" time="0.111">
+    </testcase>
+    <testcase classname="Status API GET /api/getstatus should reject request without token" name="Status API GET /api/getstatus should reject request without token" time="0.092">
+      <failure>MongoServerError: E11000 duplicate key error collection: social_media_test.usersigmas index: username_1 dup key: { username: &quot;testuser&quot; }
+    at InsertOneOperation.handleOk (/home/vscode/Social-media-web_app/backend/node_modules/mongoose/node_modules/mongodb/src/operations/insert.ts:79:13)
+    at tryOperation (/home/vscode/Social-media-web_app/backend/node_modules/mongoose/node_modules/mongodb/src/operations/execute_operation.ts:290:26)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at executeOperation (/home/vscode/Social-media-web_app/backend/node_modules/mongoose/node_modules/mongodb/src/operations/execute_operation.ts:119:12)
+    at Collection.insertOne (/home/vscode/Social-media-web_app/backend/node_modules/mongoose/node_modules/mongodb/src/collection.ts:294:12)</failure>
+    </testcase>
+    <testcase classname="Status API GET /api/getprofile should get profile with valid token" name="Status API GET /api/getprofile should get profile with valid token" time="0.103">
+    </testcase>
+    <testcase classname="Status API GET /api/getprofile should reject request without token" name="Status API GET /api/getprofile should reject request without token" time="0.099">
+    </testcase>
+    <testcase classname=" Test execution failure: could be caused by test hooks like &apos;afterAll&apos;." name=" Test execution failure: could be caused by test hooks like &apos;afterAll&apos;." time="0">
+      <failure>{&quot;message&quot;:&quot;&quot;,&quot;stack&quot;:&quot;Error: thrown: \&quot;Exceeded timeout of 10000 ms for a hook.\nAdd a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\&quot;\n    at Object.afterAll (/home/vscode/Social-media-web_app/backend/tests/setup.js:40:1)\n    at Runtime._execModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:1268:24)\n    at Runtime._loadModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:944:12)\n    at Runtime.requireModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:832:12)\n    at jestAdapter (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/runner.js:84:33)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at runTestInternal (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:275:16)\n    at runTest (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:343:7)\n    at Object.worker (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:497:12)&quot;}</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Chat API" errors="0" failures="1" skipped="0" timestamp="2025-12-16T17:17:22" time="14.142" tests="7">
+    <testcase classname="Chat API POST /api/chats should create a new chat between users" name="Chat API POST /api/chats should create a new chat between users" time="1.516">
+      <failure>Error: expect(received).toHaveLength(expected)
+
+Expected length: 2
+Received length: 1
+Received array:  [{&quot;_id&quot;: &quot;694194251eb4fb18dc686efe&quot;, &quot;isOnline&quot;: false, &quot;lastSeen&quot;: &quot;2025-12-16T17:17:25.062Z&quot;, &quot;username&quot;: &quot;user2&quot;}]
+    at Object.toHaveLength (/home/vscode/Social-media-web_app/backend/tests/chat.test.js:57:47)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)</failure>
+    </testcase>
+    <testcase classname="Chat API POST /api/chats should return existing chat if one already exists" name="Chat API POST /api/chats should return existing chat if one already exists" time="0.198">
+    </testcase>
+    <testcase classname="Chat API GET /api/chats/:userId should get chats for a user" name="Chat API GET /api/chats/:userId should get chats for a user" time="0.22">
+    </testcase>
+    <testcase classname="Chat API GET /api/chats/:userId should return empty array for user with no chats" name="Chat API GET /api/chats/:userId should return empty array for user with no chats" time="0.496">
+    </testcase>
+    <testcase classname="Chat API GET /api/messages/:chatId should get messages for a chat" name="Chat API GET /api/messages/:chatId should get messages for a chat" time="0.294">
+    </testcase>
+    <testcase classname="Chat API GET /api/messages/:chatId should return empty array for chat with no messages" name="Chat API GET /api/messages/:chatId should return empty array for chat with no messages" time="0.183">
+    </testcase>
+    <testcase classname="Chat API GET /api/messages should get all messages" name="Chat API GET /api/messages should get all messages" time="0.191">
+    </testcase>
+    <testcase classname=" Test execution failure: could be caused by test hooks like &apos;afterAll&apos;." name=" Test execution failure: could be caused by test hooks like &apos;afterAll&apos;." time="0">
+      <failure>{&quot;message&quot;:&quot;&quot;,&quot;stack&quot;:&quot;Error: thrown: \&quot;Exceeded timeout of 10000 ms for a hook.\nAdd a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\&quot;\n    at Object.afterAll (/home/vscode/Social-media-web_app/backend/tests/setup.js:40:1)\n    at Runtime._execModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:1268:24)\n    at Runtime._loadModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:944:12)\n    at Runtime.requireModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:832:12)\n    at jestAdapter (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/runner.js:84:33)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at runTestInternal (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:275:16)\n    at runTest (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:343:7)\n    at Object.worker (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:497:12)&quot;}</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Authentication API" errors="0" failures="3" skipped="0" timestamp="2025-12-16T17:17:22" time="33.304" tests="8">
+    <testcase classname="Authentication API POST /api/register should register a new user successfully" name="Authentication API POST /api/register should register a new user successfully" time="1.581">
+    </testcase>
+    <testcase classname="Authentication API POST /api/register should not register user with existing email" name="Authentication API POST /api/register should not register user with existing email" time="0.111">
+    </testcase>
+    <testcase classname="Authentication API POST /api/register should validate required fields" name="Authentication API POST /api/register should validate required fields" time="0.018">
+    </testcase>
+    <testcase classname="Authentication API POST /api/login should login user with correct credentials" name="Authentication API POST /api/login should login user with correct credentials" time="0.184">
+    </testcase>
+    <testcase classname="Authentication API POST /api/login should not login with incorrect password" name="Authentication API POST /api/login should not login with incorrect password" time="10.092">
+      <failure>Error: thrown: &quot;Exceeded timeout of 10000 ms for a test.
+Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.&quot;
+    at it (/home/vscode/Social-media-web_app/backend/tests/auth.test.js:100:5)
+    at _dispatchDescribe (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:604:26)
+    at describe (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:572:44)
+    at describe (/home/vscode/Social-media-web_app/backend/tests/auth.test.js:74:3)
+    at _dispatchDescribe (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:604:26)
+    at describe (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:572:44)
+    at Object.describe (/home/vscode/Social-media-web_app/backend/tests/auth.test.js:6:1)
+    at Runtime._execModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:1268:24)
+    at Runtime._loadModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:944:12)
+    at Runtime.requireModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:832:12)
+    at jestAdapter (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/runner.js:95:13)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at runTestInternal (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:275:16)
+    at runTest (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:343:7)
+    at Object.worker (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:497:12)</failure>
+    </testcase>
+    <testcase classname="Authentication API POST /api/login should not login with non-existent email" name="Authentication API POST /api/login should not login with non-existent email" time="10.22">
+      <failure>Error: thrown: &quot;Exceeded timeout of 10000 ms for a test.
+Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.&quot;
+    at it (/home/vscode/Social-media-web_app/backend/tests/auth.test.js:112:5)
+    at _dispatchDescribe (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:604:26)
+    at describe (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:572:44)
+    at describe (/home/vscode/Social-media-web_app/backend/tests/auth.test.js:74:3)
+    at _dispatchDescribe (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:604:26)
+    at describe (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:572:44)
+    at Object.describe (/home/vscode/Social-media-web_app/backend/tests/auth.test.js:6:1)
+    at Runtime._execModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:1268:24)
+    at Runtime._loadModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:944:12)
+    at Runtime.requireModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:832:12)
+    at jestAdapter (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/runner.js:95:13)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at runTestInternal (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:275:16)
+    at runTest (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:343:7)
+    at Object.worker (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:497:12)</failure>
+    </testcase>
+    <testcase classname="Authentication API GET /api/verify should verify valid JWT token" name="Authentication API GET /api/verify should verify valid JWT token" time="0.188">
+    </testcase>
+    <testcase classname="Authentication API GET /api/verify should reject invalid token" name="Authentication API GET /api/verify should reject invalid token" time="0.01">
+      <failure>Error: expected 401 &quot;Unauthorized&quot;, got 500 &quot;Internal Server Error&quot;
+    at Object.expect (/home/vscode/Social-media-web_app/backend/tests/auth.test.js:164:10)
+    at Promise.finally.completed (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:1557:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:1497:10)
+    at _callCircusTest (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:1007:40)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at _runTest (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:947:3)
+    at /home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:849:7
+    at _runTestsForDescribeBlock (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:862:11)
+    at _runTestsForDescribeBlock (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:857:11)
+    at _runTestsForDescribeBlock (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:857:11)
+    at run (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:761:3)
+    at runAndTransformResultsToJestFormat (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/jestAdapterInit.js:1918:21)
+    at jestAdapter (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/runner.js:101:19)
+    at runTestInternal (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:275:16)
+    at runTest (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:343:7)
+    at Object.worker (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:497:12)
+----
+    at Test._assertStatus (/home/vscode/Social-media-web_app/backend/node_modules/supertest/lib/test.js:309:14)
+    at /home/vscode/Social-media-web_app/backend/node_modules/supertest/lib/test.js:365:13
+    at Test._assertFunction (/home/vscode/Social-media-web_app/backend/node_modules/supertest/lib/test.js:342:13)
+    at Test.assert (/home/vscode/Social-media-web_app/backend/node_modules/supertest/lib/test.js:195:23)
+    at localAssert (/home/vscode/Social-media-web_app/backend/node_modules/supertest/lib/test.js:138:14)
+    at Server.&lt;anonymous&gt; (/home/vscode/Social-media-web_app/backend/node_modules/supertest/lib/test.js:152:11)
+    at Object.onceWrapper (node:events:622:28)
+    at Server.emit (node:events:508:28)
+    at emitCloseNT (node:net:2419:8)
+    at processTicksAndRejections (node:internal/process/task_queues:88:21)</failure>
+    </testcase>
+    <testcase classname=" Test execution failure: could be caused by test hooks like &apos;afterAll&apos;." name=" Test execution failure: could be caused by test hooks like &apos;afterAll&apos;." time="0">
+      <failure>{&quot;message&quot;:&quot;&quot;,&quot;stack&quot;:&quot;Error: thrown: \&quot;Exceeded timeout of 10000 ms for a hook.\nAdd a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\&quot;\n    at Object.afterAll (/home/vscode/Social-media-web_app/backend/tests/setup.js:40:1)\n    at Runtime._execModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:1268:24)\n    at Runtime._loadModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:944:12)\n    at Runtime.requireModule (/home/vscode/Social-media-web_app/backend/node_modules/jest-runtime/build/index.js:832:12)\n    at jestAdapter (/home/vscode/Social-media-web_app/backend/node_modules/jest-circus/build/runner.js:84:33)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at runTestInternal (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:275:16)\n    at runTest (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:343:7)\n    at Object.worker (/home/vscode/Social-media-web_app/backend/node_modules/jest-runner/build/testWorker.js:497:12)&quot;}</failure>
+    </testcase>
+  </testsuite>
 </testsuites>

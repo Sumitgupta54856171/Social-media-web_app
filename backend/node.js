@@ -15,12 +15,10 @@ const jwtverify =require('./controller/jwt');
 const Status = require('./controller/Status')
 const { setchat } = require('./controller/chat');
 const socket = require('socket.io');
-// ✅ Fix 1: Ye line top par add karein
 const { ApolloServer } =require ('@apollo/server');
 const { expressMiddleware } = require ('@as-integrations/express5');
 const { ApolloServerPluginDrainHttpServer } =require ('@apollo/server/plugin/drainHttpServer');
 const http = require('http');
-// ✅ Ye sahi hai (Apollo v4)
 const server = http.createServer(app);
 const User = require('./model/usersigma')
 const Chat = require('./model/chat')
@@ -195,7 +193,7 @@ app.get('/api/chats/:userId', async (req, res) => {
   consumer.run({
     eachMessage: async ({ message }) => {
       const msg = JSON.parse(message.value.toString());
-      io.emit('receive_message', msg); // send message to all connected clients
+      io.emit('receive_message', msg); 
     },
   });
 
@@ -275,7 +273,7 @@ server.listen(port,()=>{
 })
 }
 
-
+module.exports={io}
 
 startApolloServer();
 

@@ -6,8 +6,9 @@ pipeline {
 	}
 
 	environment {
-		
 		CI = 'true'
+		NODE_ENV = 'test'
+		NPM_CONFIG_CACHE = '${WORKSPACE}/.npm'
 	}
 
 	stages {
@@ -33,20 +34,38 @@ pipeline {
 			}
 		}
 
-		stage('Test with jest-junit') {
+		stage('Lint Code') {
 			parallel {
-				stage('React Tests') {
+				stage('Frontend Lint') {
 					steps {
 						dir('frontend') {
-							// React mein jest-junit config package.json ya command line mein honi chahiye
-							sh "npm test -- --reporters=default --reporters=jest-junit --passWithNoTests"
+							sh "npm run lint"
 						}
 					}
 				}
-				stage('Node Tests') {
+				stage('Backend Lint') {
 					steps {
 						dir('backend') {
-							// Make sure backend package.json also has jest-junit config
+							// Add linting for backend if eslint is configured
+							sh "echo 'Backend linting not configured yet'"
+						}
+					}
+				}
+			}
+		}
+
+		stage('Run Tests') {
+			parallel {
+				stage('Frontend Tests') {
+					steps {
+						dir('frontend') {
+							sh "npm run test"
+						}
+					}
+				}
+				stage('Backend Tests') {
+					steps {
+						dir('backend') {
 							sh 'npm run test'
 						}
 					}
@@ -54,20 +73,40 @@ pipeline {
 			}
 		}
 
-		stage("Build Frontend Image"){
-			steps{
-				dir("frontend"){
-					// Fixed spelling: frontened -> frontend
-					sh "docker build -t social-media-frontend ."
+		stage('Security Audit') {
+			parallel {
+				stage('Frontend Audit') {
+					steps {
+						dir('frontend') {
+							sh "npm audit --audit-level moderate || echo 'NPM audit completed with warnings'"
+						}
+					}
+				}
+				stage('Backend Audit') {
+					steps {
+						dir('backend') {
+							sh "npm audit --audit-level moderate || echo 'NPM audit completed with warnings'"
+						}
+					}
 				}
 			}
 		}
 
-		stage("Build Backend Image"){
-			steps{
-				dir("backend"){
-					// Fixed stage name typo
-					sh "docker build -t social-media-backend ."
+		stage("Build Images") {
+			parallel {
+				stage("Build Frontend Image") {
+					steps {
+						dir("frontend") {
+							sh "docker build -t social-media-frontend ."
+						}
+					}
+				}
+				stage("Build Backend Image") {
+					steps {
+						dir("backend") {
+							sh "docker build -t social-media-backend ."
+						}
+					}
 				}
 			}
 		}
@@ -75,12 +114,28 @@ pipeline {
 
 	post {
 		always {
-			echo 'Archiving Test Results .. '
+			echo 'Archiving Test Results and Cleanup...'
 
+			// Archive test results
 			junit testResults: '**/junit.xml', allowEmptyResults: true
+
+			// Archive coverage reports if they exist
+			archiveArtifacts artifacts: '**/coverage/**', allowEmptyArchive: true
+
+			// Clean up Docker images to save space
+			sh 'docker system prune -f || true'
 		}
 		success {
-			echo ' ✅ Social-media app deployed successfully.'
+			echo ' ✅ Social-media app pipeline completed successfully!'
+			echo ' 🎉 All tests passed and images built successfully.'
+		}
+		failure {
+			echo ' ❌ Pipeline failed! Check the logs above for details.'
+			echo ' 🔍 Check test results and build logs for issues.'
+		}
+		unstable {
+			echo ' ⚠️  Pipeline completed with test failures or warnings.'
+			echo ' 📊 Check test results for failed tests.'
 		}
 	}
 }

@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "test": "react-scripts test --watchAll=false",
+    "test": "jest --config jest.config.js --passWithNoTests",
+    "test:watch": "jest --config jest.config.js --watch",
+    "test:coverage": "jest --config jest.config.js --coverage",
     "lint": "eslint .",
     "preview": "vite preview"
   },
