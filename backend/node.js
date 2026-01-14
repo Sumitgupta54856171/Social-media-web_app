@@ -22,15 +22,14 @@ const http = require('http');
 const server = http.createServer(app);
 const User = require('./model/usersigma')
 const Chat = require('./model/chat')
+
+const {initSocket,getIO} = require('./config/socker')
+
 const Message = require('./model/message')
 const {Kafka} = require('kafkajs');
 const {typeDefs,resolvers} = require('./model/graphsql')
-const io = socket(server, {
-    cors: {
-      origin: "http://localhost:5173",
-      methods: ["GET", "POST"], 
-    },
-  });
+initSocket(server);
+const io = getIO();
 const kafka = new Kafka({
     clientId: 'my-app',
     brokers: [ 'localhost:9092'],
@@ -109,13 +108,27 @@ app.get('/api/chats/:userId', async (req, res) => {
 
   const producer = kafka.producer();
   const consumer = kafka.consumer({groupId: "chat-group"});
+  const runKafka = async ()=>{
+    try{
+      await producer.connect();
+      await consumer.connect();
+      await consumer.subscribe({topic:"chat-topic",fromBeginning:false})
+      await consumer.run({
+            eachMessage: async ({ message }) => {
+                const msgData = JSON.parse(message.value.toString());
+                console.log("🔄 Kafka processed message, sending to frontend:", msgData.content);
+                io.emit('receive_message', msgData);
+            },
+        });
+    }catch(err){
+      console.error("Kafka error:",err)
+    }
+  }
    
 
   const connectedUsers = new Map();
   
   io.on('connection',async (socket) => {
-    await producer.connect();
-    await consumer.connect();
     console.log('User connected:', socket.id);
   
     // User joins
@@ -190,14 +203,6 @@ app.get('/api/chats/:userId', async (req, res) => {
         
         // Send message to chat room
 
-  consumer.run({
-    eachMessage: async ({ message }) => {
-      const msg = JSON.parse(message.value.toString());
-      io.emit('receive_message', msg); 
-    },
-  });
-
-        
        
         const updatedChat = await Chat.findById(chatId)
           .populate('participants', 'username avatar isOnline lastSeen')
@@ -260,22 +265,35 @@ app.post('/api/following',savefollower);
 app.get('/api/getuser',finduser);
 app.get('/api/comment/',)
 
-async function startApolloServer(){
-  await servers.start()
+async function startApolloServer() {
+  // 1. Apollo Server start karo
+  await servers.start();
 
-  app.use("/graphql",express.json(),expressMiddleware(servers))
-  const port =3003;
-server.listen(port,()=>{
-	console.log(`server is running ${port}`);
-	client;
-		redis;
-		
-})
+  // 2. Middleware setup karo (Ye tests aur normal run dono ke liye zaroori hai)
+  app.use("/graphql", express.json(), expressMiddleware(servers));
+
+  // 3. Server Listen logic ko condition mein daalo
+  // Ye check karega: "Kya ye file directly node se run ho rahi hai?"
+  // Agar Haan (Production/Dev) -> Server listen karega.
+  // Agar Nahi (Jest Test) -> Server listen NAHI karega (taaki Supertest handle kar sake).
+  if (require.main === module) {
+    const port = 3003;
+    server.listen(port, async () => {
+      console.log(`server is running ${port}`);
+      await runKafka();
+      // client; // Agar ye initialization code hai toh thik hai, warn: variables doing nothing
+      // redis;
+    });
+  }
 }
 
-module.exports={io}
-
+// Function call karo taaki middleware attach ho jaye
 startApolloServer();
+
+// 4. IMPORTANT: App aur server ko export karo taaki tests ise use kar sakein
+module.exports = app; 
+// Agar tum socket.io use kar rahe ho aur 'server' http server hai, toh:
+// module.exports = { app, server };
 
 
 

@@ -1,5 +1,5 @@
-import Post from "./component/Post";
-import ProfilePage from "./component/ProfilePage";
+import Post from "./components/Post";
+import ProfilePage from "./components/ProfilePage";
 function Postpage(){
 
     return <>

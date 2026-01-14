@@ -1,0 +1,4 @@
+FROM ubuntu:latest
+LABEL authors="vscode"
+
+ENTRYPOINT ["top", "-b"]

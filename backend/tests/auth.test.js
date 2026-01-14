@@ -1,91 +1,70 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-const app = require('../node'); // Assuming your main app is exported from node.js
+const app = require('../node'); // Make sure this exports the express app!
 const User = require('../model/usersigma');
 
 describe('Authentication API', () => {
-  beforeAll(async () => {
-    // Connect to test database
-    await mongoose.connect(process.env.MONGODB_TEST_URI || 'mongodb://localhost:27017/social_media_test');
-  });
-
-  afterAll(async () => {
-    
-    await mongoose.connection.dropDatabase();
-    await mongoose.connection.close();
-  });
-
-  beforeEach(async () => {
-    // Clear users collection before each test
-    await User.deleteMany({});
-  });
+  let testUser = {
+    username: `testuser_${Date.now()}`,
+    email: `test_${Date.now()}@example.com`,
+    password: 'password123',
+  };
 
   describe('POST /api/register', () => {
     it('should register a new user successfully', async () => {
-      const userData = {
-        username: 'testuser',
-        email: 'test@example.com',
-        password: 'password123'
-      };
-
       const response = await request(app)
         .post('/api/register')
-        .send(userData)
+        .send(testUser)
         .expect(201);
 
       expect(response.text).toBe('User registered successfully');
     });
 
-    it('should not register user with existing email', async () => {
-      const userData = {
-        username: 'testuser',
-        email: 'test@example.com',
-        password: 'password123'
-      };
-
+    it('should not register user with existing username/email', async () => {
       // First registration
       await request(app)
         .post('/api/register')
-        .send(userData)
+        .send(testUser)
         .expect(201);
 
-      // Second registration with same email
-      const response = await request(app)
+      // Second attempt — same data
+      const duplicateResponse = await request(app)
         .post('/api/register')
-        .send(userData)
-        .expect(400);
+        .send(testUser)
+        .expect(400); // ← Fix your controller to return 400!
 
-      expect(response.text).toBe('User already exists');
+      expect(duplicateResponse.text).toMatch(/already exists/i);
     });
 
-    it('should validate required fields', async () => {
-      const incompleteUserData = {
-        username: 'testuser',
-        // Missing email and password
+    it('should return 400 for missing required fields', async () => {
+      const incomplete = {
+        username: 'incomplete',
+        // missing email & password
       };
 
-      await request(app)
+      const response = await request(app)
         .post('/api/register')
-        .send(incompleteUserData)
-        .expect(500); // This should ideally be 400, but based on current code it returns 500
+        .send(incomplete)
+        .expect(400); // ← Improve controller to return 400, not 500
     });
   });
 
   describe('POST /api/login', () => {
+    let registeredUser;
+
     beforeEach(async () => {
-      // Create a test user
-      const user = new User({
-        username: 'testuser',
-        email: 'test@example.com',
-        password: 'password123'
+      registeredUser = new User({
+        username: `loginuser_${Date.now()}`,
+        email: `login_${Date.now()}@example.com`,
+        password: 'password123',
       });
-      await user.save();
+      await registeredUser.save();
     });
 
-    it('should login user with correct credentials', async () => {
+    it('should login with correct credentials and set cookie', async () => {
       const loginData = {
-        email: 'test@example.com',
-        password: 'password123'
+        email: registeredUser.email,
+        password: 'password123',
       };
 
       const response = await request(app)
@@ -95,73 +74,66 @@ describe('Authentication API', () => {
 
       expect(response.body.message).toBe('Login successful');
       expect(response.headers['set-cookie']).toBeDefined();
+      expect(response.headers['set-cookie'][0]).toMatch(/sociluser=/); // or correct cookie name
     });
 
-    it('should not login with incorrect password', async () => {
-      const loginData = {
-        email: 'test@example.com',
-        password: 'wrongpassword'
-      };
-
-      await request(app)
+    it('should NOT login with wrong password → 401', async () => {
+      const response = await request(app)
         .post('/api/login')
-        .send(loginData)
-        .expect(200); // Current implementation doesn't return error status
+        .send({
+          email: registeredUser.email,
+          password: 'wrongpass',
+        })
+        .expect(401); // ← Fix controller to return 401
+
+      expect(response.body.message).toMatch(/invalid/i);
     });
 
-    it('should not login with non-existent email', async () => {
-      const loginData = {
-        email: 'nonexistent@example.com',
-        password: 'password123'
-      };
-
-      await request(app)
+    it('should NOT login with non-existent email → 401', async () => {
+      const response = await request(app)
         .post('/api/login')
-        .send(loginData)
-        .expect(200); // Current implementation doesn't return error status
+        .send({
+          email: 'doesnot@exist.com',
+          password: 'password123',
+        })
+        .expect(401); // ← Fix controller!
+
+      expect(response.body.message).toMatch(/not found|invalid/i);
     });
   });
 
   describe('GET /api/verify', () => {
-    it('should verify valid JWT token', async () => {
-      // First register and login to get a token
-      const userData = {
-        username: 'testuser',
-        email: 'test@example.com',
-        password: 'password123'
+    it('should verify valid session/token', async () => {
+      // Register + Login to get cookie
+      const user = {
+        username: `verify_${Date.now()}`,
+        email: `verify_${Date.now()}@example.com`,
+        password: 'password123',
       };
 
-      await request(app)
-        .post('/api/register')
-        .send(userData)
-        .expect(201);
+      await request(app).post('/api/register').send(user).expect(201);
 
-      const loginResponse = await request(app)
+      const loginRes = await request(app)
         .post('/api/login')
-        .send({
-          email: 'test@example.com',
-          password: 'password123'
-        })
+        .send({ email: user.email, password: user.password })
         .expect(200);
 
-      const cookies = loginResponse.headers['set-cookie'];
-      expect(cookies).toBeDefined();
+      const cookies = loginRes.headers['set-cookie'];
 
-      // Now test the verify endpoint
-      const verifyResponse = await request(app)
+      const verifyRes = await request(app)
         .get('/api/verify')
         .set('Cookie', cookies)
         .expect(200);
 
-      // The verify endpoint should return some verification response
-      expect(verifyResponse.body).toBeDefined();
+      expect(verifyRes.body).toBeDefined();
+      // Add more specific expectations depending on what /verify returns
     });
 
-    it('should reject invalid token', async () => {
+    it('should reject invalid/expired token', async () => {
       await request(app)
         .get('/api/verify')
-        .set('Cookie', 'sociluser=invalid_token')
-        .expect(401); // Assuming jwtverify.verifyToken returns 401 for invalid tokens
+        .set('Cookie', 'sociluser=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.invalid.token')
+        .expect(401);
     });
   });
 });

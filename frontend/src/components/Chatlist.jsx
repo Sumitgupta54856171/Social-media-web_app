@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Send, Phone, Video, MoreVertical, Search, Paperclip, Smile, ArrowLeft } from 'lucide-react';
-import { io } from 'socket.io-client';
 import axios from "axios";
 import { useContext } from 'react';
-import { Authcontext } from '../context';
+import { Authcontext } from '../context.js';
+import { useSocket } from '../context/socketcontext.jsx';
 
 const WhatsAppClone = () => {
   const {username,userprofile} = useContext(Authcontext);
+  const { socket } = useSocket();
 
   const currentUser = userprofile
   
-  console.log("to check the current user ",currentUser)
   useEffect(()=>{
     const Userlist = async()=>{
       const res = await axios.get('http://localhost:3003/api/getuser',{withCredentials:true})
@@ -28,7 +28,6 @@ const WhatsAppClone = () => {
   const [typingUsers, setTypingUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const messagesEndRef = useRef(null);
-  const socket = useRef(io('http://localhost:3003'))
  useEffect(() => {
   // Only run if currentUser is a valid object with an _id
   if (userprofile[0] && userprofile[0]._id) {
@@ -52,14 +51,14 @@ async function createOrGetChat({participants}){
   // Mock messages for active chat
   useEffect(() => {
     // Ensure activeChat is a valid object with an _id to avoid errors in filter/map
-    if (activeChat && typeof activeChat === 'object' && activeChat._id && socket.current) {
+    if (activeChat && typeof activeChat === 'object' && activeChat._id && socket) {
       const fetchMessages = async () => {
         try {
           const res = await axios.get(`http://localhost:3003/api/messages/${activeChat._id}`, { withCredentials: true });
-          console.log("check the data in activeChat", res.data)
+          
           setMessages(Array.isArray(res.data) ? res.data : []);
         } catch (err) {
-          setMessages([]); // fallback to empty array on error
+          setMessages([]);
         }
       };
       fetchMessages();
@@ -72,11 +71,10 @@ async function createOrGetChat({participants}){
     scrollToBottom();
   }, [messages]);
   useEffect(() => {
-    if (!socket.current) return;
+    if (!socket) return;
 
     const handleReceiveMessage = (message) => {
       if(activeChat && activeChat._id === message.chatId){
-        console.log("send by the backend database",message)
         setMessages(prev => [...prev, message]);
       }
       setChats(prev => prev.map(chat => 
@@ -121,21 +119,21 @@ async function createOrGetChat({participants}){
       ));
     };
 
-    socket.current.on('receive_message', handleReceiveMessage);
-    socket.current.on('chat_updated', handleChatUpdated);
-    socket.current.on('user_typing', handleUserTyping);
-    socket.current.on('user_stop_typing', handleUserStopTyping);
-    socket.current.on('user_online', handleUserOnline);
-    socket.current.on('user_offline', handleUserOffline);
+    socket.on('receive_message', handleReceiveMessage);
+    socket.on('chat_updated', handleChatUpdated);
+    socket.on('user_typing', handleUserTyping);
+    socket.on('user_stop_typing', handleUserStopTyping);
+    socket.on('user_online', handleUserOnline);
+    socket.on('user_offline', handleUserOffline);
 
     return () => {
-      if (socket.current) {
-        socket.current.off('receive_message', handleReceiveMessage);
-        socket.current.off('chat_updated', handleChatUpdated);
-        socket.current.off('user_typing', handleUserTyping);
-        socket.current.off('user_stop_typing', handleUserStopTyping);
-        socket.current.off('user_online', handleUserOnline);
-        socket.current.off('user_offline', handleUserOffline);
+      if (socket) {
+        socket.off('receive_message', handleReceiveMessage);
+        socket.off('chat_updated', handleChatUpdated);
+        socket.off('user_typing', handleUserTyping);
+        socket.off('user_stop_typing', handleUserStopTyping);
+        socket.off('user_online', handleUserOnline);
+        socket.off('user_offline', handleUserOffline);
       }
     };
   }, [activeChat, users]);
@@ -149,7 +147,7 @@ async function createOrGetChat({participants}){
         content: newMessage,
         timestamp: new Date()
       };
-      socket.current.emit('send_message', {
+      socket.emit('send_message', {
         chatId: activeChat._id,
         senderId: userprofile[0]._id,
         content: newMessage
@@ -171,9 +169,6 @@ async function createOrGetChat({participants}){
       chat.participants.some(p => p._id === user._id)
     );
   
-    console.log(existingChat)
-    console.log(chats)
-    console.log('check the exitstingchat')
     if (existingChat&& existingChat !== null&& existingChat !== undefined) {
       setActiveChat(existingChat);
     } else {
@@ -347,7 +342,7 @@ async function createOrGetChat({participants}){
                   const containerClass = isOwn ? 'message-container-own' : 'message-container-other';
                     const bubbleStylingClass = isOwn ? 'bubble-own' : 'bubble-other';
                     const timestampStylingClass = isOwn ? 'timestamp-own' : 'timestamp-other';
-                  console.log("check the which thing is not work correctly : ",message.sender._id === userprofile[0]._id)
+                  
                   return (
                     <div key={message._id} className={containerClass}>
                       <div className={`max-w-xs lg:max-w-md px-3 py-2 rounded-xl ${bubbleStylingClass}`}>

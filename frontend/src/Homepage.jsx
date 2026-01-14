@@ -1,10 +1,10 @@
 import {Link} from "react-router-dom";
 import { Authcontext } from "./context";
 import { useContext } from "react";
-import Staturing from "./component/Staturing";
+import Staturing from "./components/Staturing";
 
-import Addstatus from "./component/Addstatus";
-import Post from "./component/Post";
+import Addstatus from "./components/Addstatus";
+import Post from "./components/Post";
 function Homepage(){
     const {user,username} =useContext(Authcontext);
     console.log(username);

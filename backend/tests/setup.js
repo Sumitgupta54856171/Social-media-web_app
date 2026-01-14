@@ -1,44 +1,53 @@
+// tests/setup.js
 const mongoose = require('mongoose');
 
-// Global test setup
-beforeAll(async () => {
-  // Set a longer timeout for database operations
-  jest.setTimeout(30000);
+jest.mock('kafkajs', () => ({
+  Kafka: jest.fn(() => ({
+    producer: jest.fn(() => ({
+      connect: jest.fn(),
+      send: jest.fn(),
+      disconnect: jest.fn(),
+    })),
+    consumer: jest.fn(() => ({
+      connect: jest.fn(),
+      subscribe: jest.fn(),
+      run: jest.fn(),
+      disconnect: jest.fn(),
+    })),
+  })),
+}));
 
-  // Connect to test database
-  if (mongoose.connection.readyState === 0) {
-    await mongoose.connect(process.env.MONGODB_TEST_URI || 'mongodb://localhost:27017/social_media_test');
-  }
-});
-
-// Set test environment
 process.env.NODE_ENV = 'test';
 process.env.MONGODB_TEST_URI = 'mongodb://localhost:27017/social_media_test';
 
-// Global test setup
 beforeAll(async () => {
-  // Set a longer timeout for database operations
-  jest.setTimeout(30000);
-
-  // Connect to test database
+  jest.setTimeout(60000);
   if (mongoose.connection.readyState === 0) {
-    await mongoose.connect(process.env.MONGODB_TEST_URI || 'mongodb://localhost:27017/social_media_test');
+    await mongoose.connect(process.env.MONGODB_TEST_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
   }
 });
 
-// Clean up after each test
-afterEach(async () => {
-  // Clear all collections
+beforeEach(async () => {
   const collections = mongoose.connection.collections;
   for (const key in collections) {
-    const collection = collections[key];
-    await collection.deleteMany({});
+    await collections[key].deleteMany({});
   }
 });
 
-// Clean up after all tests
+afterEach(async () => {
+  const collections = mongoose.connection.collections;
+  for (const key in collections) {
+    await collections[key].deleteMany({});
+  }
+});
+
 afterAll(async () => {
-  // Close database connection
-  await mongoose.connection.dropDatabase();
   await mongoose.connection.close();
+  // Remove dropDatabase()
+  if (typeof redisClient !== 'undefined' && redisClient) {
+    await redisClient.quit();
+  }
 });

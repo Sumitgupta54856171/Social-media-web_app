@@ -5,13 +5,13 @@ import AuthPorvider from './AuthPorvider';
 import './index.css';
 import {  Routes, Route} from 'react-router-dom';
 import Homepage from './Homepage';
-import AddPost from './component/AddPost';
-import Profile from './component/Profile';
-import Chatlist from './component/Chatlist';
-import Navbar from './component/Navbar';
-import Shownav from './component/Shownav';
-import Chatbot from './component/Chatbot';
-import WhatsAppStatus from './component/StatuV1';
+import AddPost from './components/AddPost';
+import Profile from './components/Profile';
+import Chatlist from './components/Chatlist';
+import Navbar from './components/Navbar';
+import Shownav from './components/Shownav';
+import Chatbot from './components/Chatbot';
+import WhatsAppStatus from './components/StatuV1';
 function App() {
 
   return (

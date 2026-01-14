@@ -27,7 +27,6 @@ async function userdata (){
   try{
 const response = await axios.get("http://localhost:3003/api/getprofile",{withCredentials:true})
  setuserprofile(response.data.profiledata);
-
   }catch(err){
    console.log("this is usedata error : ",err)
   }
@@ -52,7 +51,6 @@ checkAuth();
   useEffect(()=>{
   const getstatus = async ()=>{
         const response = await axios.get('http://localhost:3003/api/getstatus',{withCredentials:true});
-        console.log('statusdata',response.data.statusdata1);
         setStatus(response.data.statusdata1);
        
         }
@@ -61,8 +59,6 @@ getstatus()
     
  
  async function search(searchQuery){
-    console.log('search start ')
-    console.log(searchQuery)
     const response = await axios.post('http://localhost:3003/api/search', {
         username: searchQuery
     },{withCredentials:true});
@@ -70,7 +66,7 @@ getstatus()
     if(response.data.searchdata){
         setseachtu(true);
     }
-    console.log(searhtu);
+    
     return response.data.searchdata;
     }
     async function login(email,password){
@@ -80,7 +76,7 @@ getstatus()
                 password: password
             },{withCredentials: true});
             redirect('/')
-            console.log(res.data)
+            
             setMessage(res.data.message);
         }catch(error){
             console.log(error);
@@ -100,7 +96,7 @@ getstatus()
         }
         await axios.post('http://localhost:3003/api/register',userData,{withCredentials: true})
             .then((res) => {
-                console.log(res.data)
+                
                 setMessage(res.data.message);
 
             }).catch((error) => {
