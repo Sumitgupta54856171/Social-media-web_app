@@ -26,7 +26,8 @@ flowchart LR
 
   UserBrowser --> Frontend
   Frontend -->|REST / GraphQL| Backend
-  Frontend <-->|WebSocket (Socket.IO)| Backend
+  Frontend -->|WebSocket (Socket.IO)| Backend
+  Backend -->|WebSocket (Socket.IO)| Frontend
 
   Backend --> Mongo
   Backend --> Redis
