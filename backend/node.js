@@ -1,7 +1,7 @@
 const express= require('express');
 const app = express();
 require('dotenv').config();
-const redis = require('./config/redis')
+const {redis} = require('./config/redis')
 const client = require('./config/db');
 const conroller = require('./controller/login');
 const cors = require('cors');
@@ -267,22 +267,22 @@ app.get('/api/comment/',)
 
 async function startApolloServer() {
   // 1. Apollo Server start karo
+  const redis_connect = await redis()
   await servers.start();
 
   // 2. Middleware setup karo (Ye tests aur normal run dono ke liye zaroori hai)
   app.use("/graphql", express.json(), expressMiddleware(servers));
 
-  // 3. Server Listen logic ko condition mein daalo
-  // Ye check karega: "Kya ye file directly node se run ho rahi hai?"
-  // Agar Haan (Production/Dev) -> Server listen karega.
-  // Agar Nahi (Jest Test) -> Server listen NAHI karega (taaki Supertest handle kar sake).
+  
   if (require.main === module) {
     const port = 3003;
     server.listen(port, async () => {
-      console.log(`server is running ${port}`);
+      
+      console.log(`server is running in the port ${port}`);
       await runKafka();
-      // client; // Agar ye initialization code hai toh thik hai, warn: variables doing nothing
-      // redis;
+      
+      
+      
     });
   }
 }
@@ -290,10 +290,9 @@ async function startApolloServer() {
 // Function call karo taaki middleware attach ho jaye
 startApolloServer();
 
-// 4. IMPORTANT: App aur server ko export karo taaki tests ise use kar sakein
+
 module.exports = app; 
-// Agar tum socket.io use kar rahe ho aur 'server' http server hai, toh:
-// module.exports = { app, server };
+
 
 
 
