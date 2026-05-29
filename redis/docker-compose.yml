@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: my-secure-redis
+    ports:
+      - "6379:6379"
+    # Yahan "mypassword" ko apne strong password se replace karein
+    command: redis-server --requirepass "Ashish2531"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:

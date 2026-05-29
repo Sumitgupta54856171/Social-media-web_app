@@ -1,37 +1,32 @@
-const redis = require('redis');
+const {createClient} = require('redis')
 
-// Create Redis client but don't connect in test environment
-let client;
 
-if (process.env.NODE_ENV === 'test') {
-    // Mock Redis client for tests
-    client = {
-        connect: jest.fn().mockResolvedValue(),
-        set: jest.fn().mockResolvedValue('OK'),
-        get: jest.fn().mockResolvedValue(null),
-        del: jest.fn().mockResolvedValue(1),
-        expire: jest.fn().mockResolvedValue(1),
-        quit: jest.fn().mockResolvedValue('OK'),
-        on: jest.fn(),
-        isOpen: true
-    };
-    console.log('Mock Redis client created for testing');
-} else {
-    client = new redis.createClient({
-        socket: {
-            host: 'localhost',
-            port: 6379,
-            db: 4
-        }
-    });
-
-    client.connect()
-        .then(() => {
-            console.log('connected to redis');
-        })
-        .catch((error) => {
-            console.log('Redis connection error:', error.message);
+const redis = async()=>{
+    try{
+        const client = createClient('redis://default:${process.env.redis_password}@localhost:6379')
+        client.on('connect', () => {
+            console.log('✅ Redis Client Connected Successfully');
         });
-}
 
-module.exports = client;
+        client.on('error', (err) => {
+            console.error('❌ Redis Client Error:', err);
+        });
+
+        client.on('reconnecting', () => {
+            console.log('🔄 Redis Client Reconnecting...');
+        });
+
+        // Connect to Redis
+        await client.connect();
+       
+       
+        return client
+
+    }catch(error){
+        console.error("Fail to connected the redis")
+        throw error
+
+    }
+}
+    
+module.exports={redis}
